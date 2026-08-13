@@ -1,22 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Header } from './components/Header';
-import { HeroSection } from './components/HeroSection';
-import { AboutSection } from './components/AboutSection';
-import { TopicsSection } from './components/TopicsSection';
-import { EpisodesPlayerSection } from './components/EpisodesPlayerSection';
-import { KiezOracleModal } from './components/KiezOracleModal';
-import { ContactNewsletter } from './components/ContactNewsletter';
 import { AgeGate } from './components/AgeGate';
 import { PolicyPage } from './components/PolicyPage';
+import { KiezOracleModal } from './components/KiezOracleModal';
+import { HomePage } from './pages/HomePage';
+import { UberPage } from './pages/UberPage';
+import { FolgenPage } from './pages/FolgenPage';
+import { KontaktPage } from './pages/KontaktPage';
 import { SAMPLE_EPISODES } from './data/podcastData';
 import { Episode } from './types';
-import { applyDocumentMeta, metaFromHash } from './seo';
 
 const isPolicyHash = (hash: string) =>
   hash === '#/richtlinien' || hash === '#richtlinien';
 
+const getCurrentPage = (hash: string): string => {
+  if (hash === '#/uber') return 'uber';
+  if (hash === '#/folgen') return 'folgen';
+  if (hash === '#/kontakt') return 'kontakt';
+  return 'home';
+};
+
 export default function App() {
-  const [hash, setHash] = useState(() => window.location.hash);
+  const [hash, setHash] = useState(() => window.location.hash || '#/');
   const [episodes] = useState<Episode[]>(SAMPLE_EPISODES);
   const [currentEpisode, setCurrentEpisode] = useState<Episode>(SAMPLE_EPISODES[0]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -28,34 +33,13 @@ export default function App() {
   const [oracleOpen, setOracleOpen] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const currentPage = getCurrentPage(hash);
 
   useEffect(() => {
-    const sync = () => setHash(window.location.hash);
+    const sync = () => setHash(window.location.hash || '#/');
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
   }, []);
-
-  useEffect(() => {
-    if (isPolicyHash(hash)) return;
-    const meta = metaFromHash(hash);
-    applyDocumentMeta(meta.title, meta.description);
-  }, [hash]);
-
-  // Check URL query param for shared episode link on mount
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const epParam = params.get('episode') || params.get('ep');
-    if (epParam) {
-      const targetEp = episodes.find(e => e.id === Number(epParam) || e.episodeNumber === Number(epParam));
-      if (targetEp) {
-        setCurrentEpisode(targetEp);
-        setTimeout(() => {
-          const el = document.getElementById('episodes');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-      }
-    }
-  }, [episodes]);
 
   // Sync Audio Element
   useEffect(() => {
@@ -116,7 +100,6 @@ export default function App() {
         setIsPlaying(true);
       }).catch(err => {
         console.warn("Audio playback error:", err);
-        // Fallback simulated playback timer if media source restricted in sandbox
         setIsPlaying(true);
       });
     }
@@ -159,62 +142,63 @@ export default function App() {
 
   return (
     <AgeGate>
-    <div className="min-h-screen bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
-      
-      {/* Navigation Header */}
-      <Header
-        currentEpisode={currentEpisode}
-        isPlaying={isPlaying}
-        onTogglePlay={togglePlay}
-        onOpenOracle={() => setOracleOpen(true)}
-      />
+      <div className="min-h-screen bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
 
-      {/* Main Content Sections */}
-      <main id="site-main" aria-label="Wilde Muschel — Home, Über, Themen, Folgen, Kontakt">
-        {/* 1. Hero Section */}
-        <HeroSection
-          latestEpisode={episodes[0]}
+        {/* Navigation Header */}
+        <Header
+          currentEpisode={currentEpisode}
           isPlaying={isPlaying}
-          currentEpisodeId={currentEpisode?.id || null}
-          onPlayEpisode={handlePlayEpisode}
+          onTogglePlay={togglePlay}
           onOpenOracle={() => setOracleOpen(true)}
         />
 
-        {/* 2. Über Wilde Muschel */}
-        <AboutSection />
+        {/* Page Routing */}
+        {currentPage === 'home' && (
+          <HomePage
+            isPlaying={isPlaying}
+            onPlayEpisode={handlePlayEpisode}
+            onOpenOracle={() => setOracleOpen(true)}
+          />
+        )}
 
-        {/* 3. Themen & Stories */}
-        <TopicsSection onSelectTopic={(topicId) => setSelectedCategory(topicId)} />
+        {currentPage === 'uber' && (
+          <UberPage
+            onSelectTopic={(topicId) => {
+              setSelectedCategory(topicId);
+              window.location.hash = '#/folgen';
+            }}
+          />
+        )}
 
-        {/* 4. Folgen & Audio Player Section */}
-        <EpisodesPlayerSection
-          episodes={episodes}
-          currentEpisode={currentEpisode}
-          isPlaying={isPlaying}
-          currentTime={currentTime}
-          duration={duration}
-          volume={volume}
-          isMuted={isMuted}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          onPlayEpisode={handlePlayEpisode}
-          onTogglePlay={togglePlay}
-          onSeek={handleSeek}
-          onVolumeChange={handleVolumeChange}
-          onToggleMute={handleToggleMute}
+        {currentPage === 'folgen' && (
+          <FolgenPage
+            episodes={episodes}
+            currentEpisode={currentEpisode}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            duration={duration}
+            volume={volume}
+            isMuted={isMuted}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            onPlayEpisode={handlePlayEpisode}
+            onTogglePlay={togglePlay}
+            onSeek={handleSeek}
+            onVolumeChange={handleVolumeChange}
+            onToggleMute={handleToggleMute}
+          />
+        )}
+
+        {currentPage === 'kontakt' && (
+          <KontaktPage />
+        )}
+
+        {/* Interactive Kiez Oracle Modal */}
+        <KiezOracleModal
+          isOpen={oracleOpen}
+          onClose={() => setOracleOpen(false)}
         />
-
-        {/* 5. Contact & Newsletter */}
-        <ContactNewsletter />
-      </main>
-
-      {/* Interactive Kiez Oracle Modal */}
-      <KiezOracleModal
-        isOpen={oracleOpen}
-        onClose={() => setOracleOpen(false)}
-      />
-
-    </div>
+      </div>
     </AgeGate>
   );
 }
