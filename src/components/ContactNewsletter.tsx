@@ -165,7 +165,7 @@ export const ContactNewsletter: React.FC = () => {
             </nav>
 
             <a
-              href="#/richtlinien"
+              href="/richtlinien"
               className="text-muted hover:text-gold font-semibold uppercase tracking-[0.18em] transition-colors duration-fast"
             >
               Datenschutz

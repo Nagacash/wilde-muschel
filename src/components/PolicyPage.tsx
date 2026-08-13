@@ -134,7 +134,11 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
 export const PolicyPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    applyDocumentMeta(PAGE_META.richtlinien.title, PAGE_META.richtlinien.description);
+    applyDocumentMeta(
+      PAGE_META.richtlinien.title,
+      PAGE_META.richtlinien.description,
+      PAGE_META.richtlinien.path,
+    );
   }, []);
 
   return (
@@ -142,7 +146,7 @@ export const PolicyPage: React.FC = () => {
       <header className="sticky top-0 z-50 border-b border-line bg-kiez/85 backdrop-blur-md">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
           <a
-            href="#/"
+            href="/"
             className="min-h-11 inline-flex items-center gap-2 px-4 rounded-full border border-line text-sm font-semibold text-muted hover:text-cream hover:border-gold transition-[color,border-color] duration-fast"
           >
             <ArrowLeft className="w-4 h-4" />

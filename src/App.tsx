@@ -1,25 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
-import { HeroSection } from './components/HeroSection';
-import { AboutSection } from './components/AboutSection';
-import { TopicsSection } from './components/TopicsSection';
-import { EpisodesPlayerSection } from './components/EpisodesPlayerSection';
-import { KiezOracleModal } from './components/KiezOracleModal';
-import { ContactNewsletter } from './components/ContactNewsletter';
 import { AgeGate } from './components/AgeGate';
 import { PolicyPage } from './components/PolicyPage';
+import { KiezOracleModal } from './components/KiezOracleModal';
+import { HomePage } from './pages/HomePage';
+import { UberPage } from './pages/UberPage';
+import { FolgenPage } from './pages/FolgenPage';
+import { KontaktPage } from './pages/KontaktPage';
+import { SiteFooter } from './components/SiteFooter';
 import { SAMPLE_EPISODES } from './data/podcastData';
 import { Episode } from './types';
-import { applyDocumentMeta, metaFromHash } from './seo';
+import {
+  ROUTES,
+  LEGACY_HASH_REDIRECTS,
+  routeKeyFromPath,
+  metaFromPath,
+  applyDocumentMeta,
+} from './seo';
 
 const PLAY_COUNT_BASE = 2412;
 const PLAY_COUNT_KEY = 'wm-extra-plays';
 
-const isPolicyHash = (hash: string) =>
-  hash === '#/richtlinien' || hash === '#richtlinien';
-
 export default function App() {
-  const [hash, setHash] = useState(() => window.location.hash);
+  const [pathname, setPathname] = useState(() => window.location.pathname);
   const [episodes] = useState<Episode[]>(SAMPLE_EPISODES);
   const [currentEpisode, setCurrentEpisode] = useState<Episode>(SAMPLE_EPISODES[0]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -34,6 +37,7 @@ export default function App() {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const countedEpisodesRef = useRef<Set<string>>(new Set());
+  const currentPage = routeKeyFromPath(pathname);
 
   useEffect(() => {
     try {
@@ -62,38 +66,43 @@ export default function App() {
     window.setTimeout(() => setPlayCountHighlight(false), 700);
   };
 
-  useEffect(() => {
-    const sync = () => setHash(window.location.hash);
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
+  const navigate = useCallback((path: string) => {
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    setPathname(path);
+    window.scrollTo(0, 0);
   }, []);
 
+  // Back/forward buttons.
   useEffect(() => {
-    if (isPolicyHash(hash)) return;
-    const meta = metaFromHash(hash);
-    applyDocumentMeta(meta.title, meta.description);
-  }, [hash]);
+    const sync = () => setPathname(window.location.pathname);
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
 
-  // Check URL query param for shared episode link on mount
+  // Old #/folgen style links still resolve — rewrite them to the real path once.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const epParam = params.get('episode') || params.get('ep');
-    if (epParam) {
-      const targetEp = episodes.find(e => e.id === Number(epParam) || e.episodeNumber === Number(epParam));
-      if (targetEp) {
-        setCurrentEpisode(targetEp);
-        setTimeout(() => {
-          const el = document.getElementById('episodes');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-      }
+    const target = LEGACY_HASH_REDIRECTS[window.location.hash];
+    if (target) {
+      window.history.replaceState({}, '', target);
+      setPathname(target);
     }
-  }, [episodes]);
+  }, []);
+
+  // Per-route title, description and canonical.
+  useEffect(() => {
+    const meta = metaFromPath(pathname);
+    applyDocumentMeta(meta.title, meta.description, meta.path);
+  }, [pathname]);
 
   // Sync Audio Element
   useEffect(() => {
     const audio = new Audio();
-    audio.crossOrigin = "anonymous";
+    // No crossOrigin: the episode CDN does not send an
+    // access-control-allow-origin header, so requesting a CORS fetch makes the
+    // load fail silently and the player stays pinned at 00:00.
+    audio.preload = 'metadata';
     audioRef.current = audio;
 
     const handleTimeUpdate = () => {
@@ -150,7 +159,6 @@ export default function App() {
         if (currentEpisode) registerPlay(currentEpisode.id);
       }).catch(err => {
         console.warn("Audio playback error:", err);
-        // Fallback simulated playback timer if media source restricted in sandbox
         setIsPlaying(true);
         if (currentEpisode) registerPlay(currentEpisode.id);
       });
@@ -189,72 +197,79 @@ export default function App() {
     audioRef.current.muted = nextMuted;
   };
 
-  if (isPolicyHash(hash)) {
+  if (currentPage === 'richtlinien') {
     return <PolicyPage />;
   }
 
   return (
     <AgeGate>
-    <div className="min-h-screen bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
-      
-      {/* Navigation Header */}
-      <Header
-        currentEpisode={currentEpisode}
-        isPlaying={isPlaying}
-        onTogglePlay={togglePlay}
-        onOpenOracle={() => setOracleOpen(true)}
-      />
+      <div className="min-h-screen flex flex-col bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
 
-      {/* Main Content Sections */}
-      <main id="site-main" aria-label="Wilde Muschel — Home, Über, Themen, Folgen, Kontakt">
-        {/* 1. Hero Section */}
-        <HeroSection
-          latestEpisode={episodes[0]}
-          isPlaying={isPlaying}
-          currentEpisodeId={currentEpisode?.id || null}
-          onPlayEpisode={handlePlayEpisode}
-          onOpenOracle={() => setOracleOpen(true)}
-          playCount={playCount}
-          playCountHighlight={playCountHighlight}
-        />
-
-        {/* 2. Über Wilde Muschel */}
-        <AboutSection />
-
-        {/* 3. Themen & Stories */}
-        <TopicsSection onSelectTopic={(topicId) => setSelectedCategory(topicId)} />
-
-        {/* 4. Folgen & Audio Player Section */}
-        <EpisodesPlayerSection
-          episodes={episodes}
+        {/* Navigation Header */}
+        <Header
           currentEpisode={currentEpisode}
           isPlaying={isPlaying}
-          currentTime={currentTime}
-          duration={duration}
-          volume={volume}
-          isMuted={isMuted}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          onPlayEpisode={handlePlayEpisode}
           onTogglePlay={togglePlay}
-          onSeek={handleSeek}
-          onVolumeChange={handleVolumeChange}
-          onToggleMute={handleToggleMute}
-          playCount={playCount}
-          playCountHighlight={playCountHighlight}
+          onOpenOracle={() => setOracleOpen(true)}
+          onNavigate={navigate}
+          currentPath={pathname}
         />
 
-        {/* 5. Contact & Newsletter */}
-        <ContactNewsletter />
-      </main>
+        {/* Page Routing */}
+        {currentPage === 'home' && (
+          <HomePage
+            isPlaying={isPlaying}
+            currentEpisodeId={currentEpisode?.id || null}
+            onPlayEpisode={handlePlayEpisode}
+            onOpenOracle={() => setOracleOpen(true)}
+            onNavigate={navigate}
+            playCount={playCount}
+            playCountHighlight={playCountHighlight}
+          />
+        )}
 
-      {/* Interactive Kiez Oracle Modal */}
-      <KiezOracleModal
-        isOpen={oracleOpen}
-        onClose={() => setOracleOpen(false)}
-      />
+        {currentPage === 'ueber' && (
+          <UberPage
+            onSelectTopic={(topicId) => {
+              setSelectedCategory(topicId);
+              navigate(ROUTES.folgen);
+            }}
+          />
+        )}
 
-    </div>
+        {currentPage === 'folgen' && (
+          <FolgenPage
+            episodes={episodes}
+            currentEpisode={currentEpisode}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            duration={duration}
+            volume={volume}
+            isMuted={isMuted}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            onPlayEpisode={handlePlayEpisode}
+            onTogglePlay={togglePlay}
+            onSeek={handleSeek}
+            onVolumeChange={handleVolumeChange}
+            onToggleMute={handleToggleMute}
+            playCount={playCount}
+            playCountHighlight={playCountHighlight}
+          />
+        )}
+
+        {currentPage === 'kontakt' && (
+          <KontaktPage />
+        )}
+
+        <SiteFooter onNavigate={navigate} />
+
+        {/* Interactive Kiez Oracle Modal */}
+        <KiezOracleModal
+          isOpen={oracleOpen}
+          onClose={() => setOracleOpen(false)}
+        />
+      </div>
     </AgeGate>
   );
 }

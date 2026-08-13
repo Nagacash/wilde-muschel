@@ -151,7 +151,11 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
                     {currentEpisode.subtitle}
                   </p>
                   <p className="text-[11px] text-[#888]">
-                    Dauer: {currentEpisode.duration} • {currentEpisode.publishDate}
+                    {/* Prefer the length reported by the audio file itself. The
+                        hardcoded value is only a placeholder until metadata
+                        loads — trusting it here let "Dauer" disagree with the
+                        player's own readout. */}
+                    Dauer: {formatTime(duration || currentEpisode.durationSeconds)} • {currentEpisode.publishDate}
                   </p>
                   <PlayCounter count={playCount} highlight={playCountHighlight} />
                 </div>
@@ -363,7 +367,13 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
                   
                   <div className="text-xs text-[#888] flex items-center gap-1 font-mono">
                     <Clock className="w-3.5 h-3.5 text-[#888]" />
-                    <span>{ep.duration}</span>
+                    {/* Loaded episode shows its true measured length; the rest
+                        fall back to the listed value until they are opened. */}
+                    <span>
+                      {ep.id === currentEpisode?.id
+                        ? formatTime(duration || ep.durationSeconds)
+                        : ep.duration}
+                    </span>
                   </div>
 
                   <button

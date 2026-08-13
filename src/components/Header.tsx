@@ -2,28 +2,48 @@ import React, { useState } from 'react';
 import { Play, Pause, Sparkles, Volume2, Mic, Flame } from 'lucide-react';
 import { PODCAST_INFO, COVER_IMAGE_URL } from '../data/podcastData';
 import { Episode } from '../types';
+import { ROUTES } from '../seo';
 
 interface HeaderProps {
   currentEpisode: Episode | null;
   isPlaying: boolean;
   onTogglePlay: () => void;
   onOpenOracle: () => void;
+  onNavigate: (path: string) => void;
+  currentPath: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentEpisode,
   isPlaying,
   onTogglePlay,
-  onOpenOracle
+  onOpenOracle,
+  onNavigate,
+  currentPath
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Real hrefs so crawlers can discover and follow every route; the click
+  // handler keeps navigation client-side for people.
+  const go = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    onNavigate(path);
+  };
+
+  const navLinks = [
+    { path: ROUTES.home, label: 'Home', icon: Mic, color: '#FF2D55' },
+    { path: ROUTES.ueber, label: 'Über', icon: Mic, color: '#FF2D55' },
+    { path: ROUTES.folgen, label: 'Folgen', icon: Volume2, color: '#FF2D55' },
+    { path: ROUTES.kontakt, label: 'Kontakt', icon: Flame, color: '#D4AF37' },
+  ];
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-kiez/40 backdrop-blur-md border-b border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
         {/* Logo Branding */}
-        <a href="#hero" className="flex items-center gap-3 group" aria-label="Wilde Muschel Home">
+        <a href={ROUTES.home} onClick={(e) => go(e, ROUTES.home)} className="flex items-center gap-3 group">
           <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#FF2D55]/60 p-0.5 shadow-[0_0_15px_rgba(255,45,85,0.4)] group-hover:scale-105 transition-transform duration-300">
             <img 
               src={COVER_IMAGE_URL} 
@@ -44,19 +64,23 @@ export const Header: React.FC<HeaderProps> = ({
         </a>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#888]" aria-label="Wilde Muschel Navigation">
-          <a href="#ueber" title="Über Wilde Muschel" className="hover:text-[#FF2D55] transition-colors flex items-center gap-1.5">
-            <Mic className="w-3.5 h-3.5 text-[#FF2D55]" /> Über
-          </a>
-          <a href="#themen" title="Themen Wilde Muschel" className="hover:text-[#D4AF37] transition-colors flex items-center gap-1.5">
-            <Flame className="w-3.5 h-3.5 text-[#D4AF37]" /> Themen
-          </a>
-          <a href="#episodes" title="Folgen Wilde Muschel" className="hover:text-[#FF2D55] transition-colors flex items-center gap-1.5">
-            <Volume2 className="w-3.5 h-3.5 text-[#FF2D55]" /> Folgen
-          </a>
-          <a href="#kontakt" title="Kontakt Wilde Muschel" className="hover:text-[#F5F5F5] transition-colors">
-            Kontakt
-          </a>
+        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#888]">
+          {navLinks.map(({ path, label, icon: Icon, color }) => {
+            const active = currentPath.replace(/\/+$/, '') === path.replace(/\/+$/, '');
+            return (
+              <a
+                key={path}
+                href={path}
+                onClick={(e) => go(e, path)}
+                aria-current={active ? 'page' : undefined}
+                className={`transition-colors flex items-center gap-1.5 ${
+                  active ? 'text-[#F5F5F5]' : 'hover:text-[#FF2D55]'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" style={{ color }} /> {label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Header Action Buttons */}
@@ -111,32 +135,32 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0A0A0A] border-b border-[#2a2a2a] px-4 py-4 space-y-3">
           <a
-            href="#ueber"
-            onClick={() => setMobileMenuOpen(false)}
+            href={ROUTES.home}
+            onClick={(e) => go(e, ROUTES.home)}
+            className="block text-[#F5F5F5] hover:text-[#FF2D55] text-xs uppercase tracking-widest py-1 font-semibold"
+          >
+            Home
+          </a>
+          <a
+            href={ROUTES.ueber}
+            onClick={(e) => go(e, ROUTES.ueber)}
             className="block text-[#F5F5F5] hover:text-[#FF2D55] text-xs uppercase tracking-widest py-1 font-semibold"
           >
             Über Wilde Muschel
           </a>
           <a
-            href="#themen"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-[#F5F5F5] hover:text-[#D4AF37] text-xs uppercase tracking-widest py-1 font-semibold"
-          >
-            Themen & Stories
-          </a>
-          <a
-            href="#episodes"
-            onClick={() => setMobileMenuOpen(false)}
+            href={ROUTES.folgen}
+            onClick={(e) => go(e, ROUTES.folgen)}
             className="block text-[#F5F5F5] hover:text-[#FF2D55] text-xs uppercase tracking-widest py-1 font-semibold"
           >
             Folgen & Player
           </a>
           <a
-            href="#kontakt"
-            onClick={() => setMobileMenuOpen(false)}
+            href={ROUTES.kontakt}
+            onClick={(e) => go(e, ROUTES.kontakt)}
             className="block text-[#F5F5F5] hover:text-white text-xs uppercase tracking-widest py-1 font-semibold"
           >
-            Kiez-Post Kontakt
+            Kiez-Post Newsletter
           </a>
           <div className="pt-2 border-t border-[#1a1a1a] flex flex-wrap gap-2">
             <button
