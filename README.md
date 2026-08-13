@@ -55,6 +55,33 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 
 ---
 
+## 🎯 Visual Identity
+
+### Bad Bitch Aesthetic — Blonde, Confident, No Apologies
+
+**The Persona** — Confident energy, curves celebrated, St. Pauli swagger meets high fashion.
+
+**Color Palette:** Vibrant pop-art style • Teal & Magenta • Gold accents • Bold, energetic • Comic book illustration quality
+
+**Visual Series:**
+- **Hero Portrait** — Full confidence, slamming curves, powerful stance
+- **Kiez Vibes** — Urban Hamburg backdrop, street culture energy, real talk ready
+- **Storyteller Mode** — Speaking that unfiltered truth, animated expression, hand gestures
+- **Luxe Kiez** — High fashion meets street soul, glamorous but real, attitude for days
+
+---
+
+## 🌍 Wilde Muschel Ecosystem
+
+Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://nagafilms-studio.vercel.app/) (generative cinema).
+
+**Connections:**
+- Naga Apparel — Technical streetwear with attitude
+- Chosen Few Records — Hamburg underground music
+- Naga Films Studio — Visual storytelling
+
+---
+
 ## 🚀 Features
 
 - **Authentische Stimme** — Keine Kunstfigur, keine Persona-Simulation. Echt.
@@ -71,17 +98,6 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 - **Hosting:** https://wilde-muschel.vercel.app/
 - **Version Control:** GitHub
 - **License:** Proprietary Personal Brand
-
----
-
-## 🌍 Wilde Muschel Ecosystem
-
-Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://nagafilms-studio.vercel.app/) (generative cinema).
-
-**Connections:**
-- Naga Apparel — Technical streetwear with attitude
-- Chosen Few Records — Hamburg underground music
-- Naga Films Studio — Visual storytelling
 
 ---
 
