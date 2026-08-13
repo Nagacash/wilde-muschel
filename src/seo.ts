@@ -105,5 +105,7 @@ export function applyDocumentMeta(title: string, description: string, path: stri
   setAttr('meta[property="og:url"]', 'content', absolute);
   setAttr('meta[name="twitter:title"]', 'content', title);
   setAttr('meta[name="twitter:description"]', 'content', description);
+  setAttr('meta[property="og:image"]', 'content', `${SITE_URL}/og-image.jpg`);
+  setAttr('meta[name="twitter:image"]', 'content', `${SITE_URL}/og-image.jpg`);
   setAttr('link[rel="canonical"]', 'href', absolute);
 }
