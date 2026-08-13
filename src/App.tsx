@@ -44,7 +44,10 @@ export default function App() {
   // Sync Audio Element
   useEffect(() => {
     const audio = new Audio();
-    audio.crossOrigin = "anonymous";
+    // No crossOrigin: the episode CDN does not send an
+    // access-control-allow-origin header, so requesting a CORS fetch makes the
+    // load fail silently and the player stays pinned at 00:00.
+    audio.preload = 'metadata';
     audioRef.current = audio;
 
     const handleTimeUpdate = () => {

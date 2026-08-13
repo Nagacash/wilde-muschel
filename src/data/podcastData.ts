@@ -1,11 +1,19 @@
 import { Episode, KiezTopic } from '../types';
 
-// Image assets generated for Wilde Muschel
-export const HOST_IMAGE_URL = '/src/assets/images/wilde_muschel_host_1786604060045.jpg';
-export const HOST_CURVY_IMAGE_URL = '/src/assets/images/curvy_host_portrait_1786606115876.jpg';
-export const BANNER_IMAGE_URL = '/src/assets/images/wilde_muschel_banner_1786604073835.jpg';
-export const COVER_IMAGE_URL = '/src/assets/images/wilde_muschel_cover_1786604087047.jpg';
-export const HERO_IMAGE_URL = '/src/assets/hero-wilde-muschel.png';
+// Image assets — imported so Vite fingerprints and bundles them.
+// Bare '/src/assets/...' strings only resolve via the dev server and 404 in
+// the production build, which is why the cover/host images rendered blank.
+import hostImage from '../assets/images/wilde_muschel_host_1786604060045.jpg';
+import hostCurvyImage from '../assets/images/curvy_host_portrait_1786606115876.jpg';
+import bannerImage from '../assets/images/wilde_muschel_banner_1786604073835.jpg';
+import coverImage from '../assets/images/wilde_muschel_cover_1786604087047.jpg';
+import heroImage from '../assets/hero-wilde-muschel.png';
+
+export const HOST_IMAGE_URL = hostImage;
+export const HOST_CURVY_IMAGE_URL = hostCurvyImage;
+export const BANNER_IMAGE_URL = bannerImage;
+export const COVER_IMAGE_URL = coverImage;
+export const HERO_IMAGE_URL = heroImage;
 export const GATE_VIDEO_URL =
   'https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/5d556d31-eaba-4e27-bffe-873a96e7d45c-F0cRnGZkuroJU6y8KzAL_A-output.mp4?x-kcdn-pid=112372';
 
