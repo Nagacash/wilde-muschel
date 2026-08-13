@@ -12,6 +12,9 @@ import { SAMPLE_EPISODES } from './data/podcastData';
 import { Episode } from './types';
 import { applyDocumentMeta, metaFromHash } from './seo';
 
+const PLAY_COUNT_BASE = 2412;
+const PLAY_COUNT_KEY = 'wm-extra-plays';
+
 const isPolicyHash = (hash: string) =>
   hash === '#/richtlinien' || hash === '#richtlinien';
 
@@ -26,8 +29,38 @@ export default function App() {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('Alle');
   const [oracleOpen, setOracleOpen] = useState<boolean>(false);
+  const [playCount, setPlayCount] = useState<number>(PLAY_COUNT_BASE);
+  const [playCountHighlight, setPlayCountHighlight] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const countedEpisodesRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    try {
+      const extra = Number(localStorage.getItem(PLAY_COUNT_KEY) || '0');
+      if (Number.isFinite(extra) && extra > 0) {
+        setPlayCount(PLAY_COUNT_BASE + extra);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const registerPlay = (episodeId: string) => {
+    if (countedEpisodesRef.current.has(episodeId)) return;
+    countedEpisodesRef.current.add(episodeId);
+    setPlayCount((n) => {
+      const next = n + 1;
+      try {
+        localStorage.setItem(PLAY_COUNT_KEY, String(next - PLAY_COUNT_BASE));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+    setPlayCountHighlight(true);
+    window.setTimeout(() => setPlayCountHighlight(false), 700);
+  };
 
   useEffect(() => {
     const sync = () => setHash(window.location.hash);
@@ -114,10 +147,12 @@ export default function App() {
     } else {
       audioRef.current.play().then(() => {
         setIsPlaying(true);
+        if (currentEpisode) registerPlay(currentEpisode.id);
       }).catch(err => {
         console.warn("Audio playback error:", err);
         // Fallback simulated playback timer if media source restricted in sandbox
         setIsPlaying(true);
+        if (currentEpisode) registerPlay(currentEpisode.id);
       });
     }
   };
@@ -128,6 +163,7 @@ export default function App() {
     } else {
       setCurrentEpisode(episode);
       setIsPlaying(true);
+      registerPlay(episode.id);
     }
   };
 
@@ -178,6 +214,8 @@ export default function App() {
           currentEpisodeId={currentEpisode?.id || null}
           onPlayEpisode={handlePlayEpisode}
           onOpenOracle={() => setOracleOpen(true)}
+          playCount={playCount}
+          playCountHighlight={playCountHighlight}
         />
 
         {/* 2. Über Wilde Muschel */}
@@ -202,6 +240,8 @@ export default function App() {
           onSeek={handleSeek}
           onVolumeChange={handleVolumeChange}
           onToggleMute={handleToggleMute}
+          playCount={playCount}
+          playCountHighlight={playCountHighlight}
         />
 
         {/* 5. Contact & Newsletter */}

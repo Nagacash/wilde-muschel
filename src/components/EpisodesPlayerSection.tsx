@@ -3,6 +3,7 @@ import { Play, Pause, RotateCcw, RotateCw, Volume2, VolumeX, Sparkles, Tag, Cloc
 import { Episode } from '../types';
 import { COVER_IMAGE_URL } from '../data/podcastData';
 import { AudioWaveformCanvas } from './AudioWaveformCanvas';
+import { PlayCounter } from './PlayCounter';
 
 interface EpisodesPlayerSectionProps {
   episodes: Episode[];
@@ -19,6 +20,8 @@ interface EpisodesPlayerSectionProps {
   onSeek: (time: number) => void;
   onVolumeChange: (vol: number) => void;
   onToggleMute: () => void;
+  playCount: number;
+  playCountHighlight: boolean;
 }
 
 export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
@@ -35,7 +38,9 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
   onTogglePlay,
   onSeek,
   onVolumeChange,
-  onToggleMute
+  onToggleMute,
+  playCount,
+  playCountHighlight
 }) => {
   const [activeShowNotesEp, setActiveShowNotesEp] = useState<Episode | null>(null);
   const [copiedEpId, setCopiedEpId] = useState<number | null>(null);
@@ -148,6 +153,7 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
                   <p className="text-[11px] text-[#888]">
                     Dauer: {currentEpisode.duration} • {currentEpisode.publishDate}
                   </p>
+                  <PlayCounter count={playCount} highlight={playCountHighlight} />
                 </div>
               </div>
 

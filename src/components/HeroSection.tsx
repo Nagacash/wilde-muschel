@@ -2,6 +2,7 @@ import React from 'react';
 import { Play, Pause, Sparkles, Flame, ShieldAlert } from 'lucide-react';
 import { Episode } from '../types';
 import { PODCAST_INFO } from '../data/podcastData';
+import { PlayCounter } from './PlayCounter';
 import heroArt from '../assets/hero-wilde-muschel.png';
 
 interface HeroSectionProps {
@@ -10,6 +11,8 @@ interface HeroSectionProps {
   currentEpisodeId: string | null;
   onPlayEpisode: (episode: Episode) => void;
   onOpenOracle: () => void;
+  playCount: number;
+  playCountHighlight: boolean;
 }
 
 const MusselMark: React.FC<{ className?: string }> = ({ className }) => (
@@ -35,7 +38,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   isPlaying,
   currentEpisodeId,
   onPlayEpisode,
-  onOpenOracle
+  onOpenOracle,
+  playCount,
+  playCountHighlight
 }) => {
   const isCurrentPlaying = isPlaying && currentEpisodeId === latestEpisode.id;
 
@@ -70,11 +75,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="relative z-10 min-h-svh max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-end lg:items-center pt-28 pb-10">
         <div className="hero-enter-copy w-full max-w-xl lg:max-w-136 space-y-6 rounded-xl lg:rounded-none bg-linear-to-t from-kiez via-kiez/80 to-transparent lg:bg-none p-5 sm:p-6 lg:p-0 -mx-1">
 
-          <div className="inline-flex items-center gap-2 min-h-11 px-4 py-2 rounded-full bg-ink/90 border-2 border-ink text-rotlicht text-xs font-semibold tracking-[0.16em] uppercase shadow-md">
-            <Flame className="w-4 h-4 text-gold" />
-            <span>St. Pauli Real Talk</span>
-            <ShieldAlert className="w-3.5 h-3.5" />
-            <span>18+</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-2 min-h-11 px-4 py-2 rounded-full bg-ink/90 border-2 border-ink text-rotlicht text-xs font-semibold tracking-[0.16em] uppercase shadow-md">
+              <Flame className="w-4 h-4 text-gold" />
+              <span>St. Pauli Real Talk</span>
+              <ShieldAlert className="w-3.5 h-3.5" />
+              <span>18+</span>
+            </div>
+            <PlayCounter count={playCount} highlight={playCountHighlight} />
           </div>
 
           <h1 id="home-title" className="font-anton hero-title-stamp text-[clamp(3.4rem,11vw,7rem)]">

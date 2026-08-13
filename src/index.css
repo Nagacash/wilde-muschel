@@ -257,3 +257,58 @@
       6px 6px 0 var(--color-ink);
   }
 }
+
+/* ── Play counter ───────────────────────────────────────────── */
+
+.play-counter {
+  background: rgba(10, 10, 10, 0.92);
+  border-color: var(--color-gold);
+  box-shadow:
+    0 0 0 1px rgba(255, 45, 85, 0.4),
+    0 0 18px rgba(212, 175, 55, 0.45),
+    0 0 36px rgba(255, 45, 85, 0.28);
+}
+
+.play-counter-num {
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.85);
+}
+
+@keyframes playCounterGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(255, 45, 85, 0.4),
+      0 0 18px rgba(212, 175, 55, 0.45),
+      0 0 36px rgba(255, 45, 85, 0.28);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(255, 45, 85, 0.7),
+      0 0 28px rgba(212, 175, 55, 0.75),
+      0 0 52px rgba(255, 45, 85, 0.5);
+  }
+}
+
+@keyframes playCounterBump {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.16);
+    color: var(--color-rotlicht);
+    text-shadow: 0 0 18px rgba(255, 45, 85, 0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .play-counter {
+    animation: playCounterGlow 2.4s ease-in-out infinite;
+  }
+
+  .play-counter--flash .play-counter-num {
+    animation: playCounterBump 600ms var(--ease-out-expo);
+  }
+}
