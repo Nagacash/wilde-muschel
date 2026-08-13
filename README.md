@@ -1,20 +1,81 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Wilde Muschel
 
-# Run and deploy your AI Studio app
+**Ungeschminkt. Ehrlich. Kiez.**
 
-This contains everything you need to run your app locally.
+Wer ist die Wilde Muschel? Keine geschönte Kunstfigur, keine Heuchelei. Eine 47-jährige St. Pauli-Ikone packt aus — ungeniert, ehrlich und voller Herz.
 
-View your app in AI Studio: https://ai.studio/apps/0e48a7e2-e190-46e9-89b6-acdc7816009b
+---
 
-## Run Locally
+## ✦ Die Persona
 
-**Prerequisites:**  Node.js
+**47 Jahre • St. Pauli Original**
 
+- **Direkt & Ungeschminkt** — Kein Heucheln, kein Moralisieren. Das Kind wird beim Namen genannt.
+- **Warmherziger Kiez-Humor** — Lachen über Pannen, Mitgefühl für schräge Seelen, echte Empathie.
+- **Volle Souveränität mit 47** — Kein Jugendwahn. Starke Ausstrahlung, Selbstliebe und ehrliche Kurven.
+- **Guschel mit Herz** — Hamburger Schnauze: Schnörkellos, laut, aber liebevoll.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+## 📖 Die Stories
+
+Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll — sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
+
+**Themen:**
+- Leben im Rotlicht — ungefilterte Wahrheit
+- St. Pauli Insider — Kiez-Kultur wie sie ist
+- Menschliche Geschichten — die Echten, die Verrückten, die Rührenden
+- Humor & Herz — Lachen ohne Schadenfreude
+
+---
+
+## 🎯 Mission
+
+Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten, die wehtun, amüsieren und berühren — ohne Umschweife.
+
+**Werte:**
+✓ Ehrlichkeit über alles  
+✓ Kiez-Kultur bewahren  
+✓ Menschlichkeit in Echtzeit  
+✓ Keine Romantisierung, keine Verdammung  
+
+---
+
+## 🌍 Wilde Muschel Ecosystem
+
+Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://nagafilms-studio.vercel.app/) (generative cinema).
+
+**Connections:**
+- Naga Apparel — Technical streetwear with attitude
+- Chosen Few Records — Hamburg underground music
+- Naga Films Studio — Visual storytelling
+
+---
+
+## 📝 Kontakt
+
+**Email:** chosenfewrecords@hotmail.de  
+**Location:** Hamburg, St. Pauli, Germany  
+**Vibe:** Ungeschminkt. Immer.
+
+---
+
+## 📜 License
+
+**© 2026 Wilde Muschel — Personal Brand / Proprietary Content**
+
+This is the intellectual property and personal brand of Wilde Muschel. All stories, content, and persona are protected.
+
+**Terms:**
+- ✗ No redistribution without permission
+- ✗ No commercial use without agreement
+- ✗ No persona imitation
+- ✓ Attribution required for any referral
+
+**For partnerships or licensing:** Contact via email above
+
+---
+
+**Wilde Muschel — St. Pauli Original. Unverkennbar. Unverschämt. Echt.**
+
+*From the Kiez. For the Kiez. Raw and real.*
