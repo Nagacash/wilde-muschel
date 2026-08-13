@@ -66,7 +66,7 @@ export const SAMPLE_EPISODES: Episode[] = [
     description: 'Im Premieren-Talk erzählt die Wilde Muschel, wie sie mit 20 auf dem Kiez landete, warum mit 47 Jahren Schluss mit Versteckspielen ist und was “Guschel über ihre Muschel” wirklich bedeutet.',
     teaserSnippet: '„Mädels, wer 15 Jahre auf St. Pauli hinter den Kulissen gearbeitet hat, lässt sich von keinem Heuchler mehr die Welt erklären!”',
     tags: ['Premierenfolge', 'Reeperbahn', 'St. Pauli', 'Lebensweg'],
-    audioUrl: '/episodes/ep1.mp3',
+    audioUrl: 'https://pub.hyperagent.com/api/published/pbf01KZXE9ZN9_Y0HVKDP0SDQFCVVN/wilde%20muschel%20ep1.mp3',
     plays: 24300,
     isExplicit: true,
     featured: true
