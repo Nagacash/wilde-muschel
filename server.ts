@@ -70,6 +70,16 @@ Slogan-Motto: 'Wilde Guschel über ihre Muschel'.`;
     res.json({ status: "ok", app: "Wilde Muschel Podcast" });
   });
 
+  const { default: likesHandler } = await import("./api/likes.js");
+  app.all("/api/likes", (req, res) => {
+    void likesHandler(req, res);
+  });
+
+  const { default: commentsHandler } = await import("./api/comments.js");
+  app.all("/api/comments", (req, res) => {
+    void commentsHandler(req, res);
+  });
+
   // Vite middleware in dev mode
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

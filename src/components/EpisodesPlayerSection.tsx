@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Play, Pause, RotateCcw, RotateCw, Volume2, VolumeX, Sparkles, Tag, Clock, Share2, Check, ShieldAlert, Radio, FileText } from 'lucide-react';
+import { Play, Pause, RotateCcw, RotateCw, Volume2, VolumeX, Sparkles, Tag, Clock, Share2, Check, ShieldAlert, Radio, FileText, MessageCircle } from 'lucide-react';
 import { Episode } from '../types';
 import { COVER_IMAGE_URL } from '../data/podcastData';
 import { AudioWaveformCanvas } from './AudioWaveformCanvas';
 import { PlayCounter } from './PlayCounter';
+import { LikeButton } from './LikeButton';
+import { EpisodeComments } from './EpisodeComments';
+import { useEpisodeLikes } from '../hooks/useEpisodeLikes';
+import { useEpisodeComments } from '../hooks/useEpisodeComments';
 
 interface EpisodesPlayerSectionProps {
   episodes: Episode[];
@@ -44,6 +48,17 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
 }) => {
   const [activeShowNotesEp, setActiveShowNotesEp] = useState<Episode | null>(null);
   const [copiedEpId, setCopiedEpId] = useState<number | null>(null);
+  const { counts, liked, pendingId, toggleLike } = useEpisodeLikes();
+  const {
+    counts: commentCounts,
+    openId: openCommentsId,
+    comments,
+    loading: commentsLoading,
+    sending: commentsSending,
+    error: commentsError,
+    toggleOpen: toggleComments,
+    postComment,
+  } = useEpisodeComments();
 
   const handleShareEpisode = async (ep: Episode, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -157,7 +172,32 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
                         player's own readout. */}
                     Dauer: {formatTime(duration || currentEpisode.durationSeconds)} • {currentEpisode.publishDate}
                   </p>
-                  <PlayCounter count={playCount} highlight={playCountHighlight} />
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <PlayCounter count={playCount} highlight={playCountHighlight} />
+                    <LikeButton
+                      episodeId={currentEpisode.id}
+                      count={counts[currentEpisode.id] || 0}
+                      liked={liked.has(currentEpisode.id)}
+                      disabled={pendingId === currentEpisode.id}
+                      onToggle={toggleLike}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => toggleComments(currentEpisode.id)}
+                      aria-expanded={openCommentsId === currentEpisode.id}
+                      className={`min-h-11 px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-[background-color,border-color,color] duration-base ease-out-expo ${
+                        openCommentsId === currentEpisode.id
+                          ? 'bg-gold/15 border-gold text-gold'
+                          : 'bg-ink border-line text-[#A0A0A0] hover:text-cream hover:border-gold/50'
+                      }`}
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-gold" aria-hidden="true" />
+                      <span className="tabular-nums font-semibold leading-none">
+                        {(commentCounts[currentEpisode.id] || 0).toLocaleString('de-DE')}
+                      </span>
+                      <span className="uppercase tracking-wider text-[10px]">Chat</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -278,6 +318,17 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
           </div>
         )}
 
+        {currentEpisode && openCommentsId === currentEpisode.id && (
+          <EpisodeComments
+            episodeId={currentEpisode.id}
+            comments={comments}
+            loading={commentsLoading}
+            sending={commentsSending}
+            error={commentsError}
+            onSend={postComment}
+          />
+        )}
+
         {/* Category Filters */}
         <div className="flex items-center justify-between flex-wrap gap-4 border-b border-[#1a1a1a] pb-4">
           <div className="flex items-center gap-2 flex-wrap">
@@ -310,12 +361,13 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
             return (
               <div
                 key={ep.id}
-                className={`p-5 rounded-2xl bg-[#121212] hover:bg-[#161616] border transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${
+                className={`p-5 rounded-2xl bg-[#121212] hover:bg-[#161616] border transition-all duration-300 ${
                   currentEpisode?.id === ep.id
                     ? 'border-[#FF2D55] shadow-[0_0_20px_rgba(255,45,85,0.25)]'
                     : 'border-[#2a2a2a] hover:border-[#3a3a3a]'
                 }`}
               >
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 {/* Left Info */}
                 <div className="flex items-start gap-4 space-y-1">
                   
@@ -376,6 +428,31 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
                     </span>
                   </div>
 
+                  <LikeButton
+                    episodeId={ep.id}
+                    count={counts[ep.id] || 0}
+                    liked={liked.has(ep.id)}
+                    disabled={pendingId === ep.id}
+                    onToggle={toggleLike}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => toggleComments(ep.id)}
+                    aria-expanded={openCommentsId === ep.id}
+                    className={`min-h-11 px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 cursor-pointer transition-[background-color,border-color,color] duration-base ease-out-expo ${
+                      openCommentsId === ep.id
+                        ? 'bg-gold/15 border-gold text-gold'
+                        : 'bg-ink border-line text-[#A0A0A0] hover:text-cream hover:border-gold/50'
+                    }`}
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-gold" aria-hidden="true" />
+                    <span className="tabular-nums font-semibold leading-none">
+                      {(commentCounts[ep.id] || 0).toLocaleString('de-DE')}
+                    </span>
+                    <span className="uppercase tracking-wider text-[10px]">Chat</span>
+                  </button>
+
                   <button
                     onClick={(e) => handleShareEpisode(ep, e)}
                     className="px-3 py-1.5 rounded-lg bg-[#0A0A0A] border border-[#2a2a2a] hover:bg-[#1a1a1a] text-[#A0A0A0] hover:text-[#F5F5F5] text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
@@ -422,6 +499,18 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
 
                 </div>
 
+              </div>
+
+              {openCommentsId === ep.id && (
+                <EpisodeComments
+                  episodeId={ep.id}
+                  comments={comments}
+                  loading={commentsLoading}
+                  sending={commentsSending}
+                  error={commentsError}
+                  onSend={postComment}
+                />
+              )}
               </div>
             );
           })}
