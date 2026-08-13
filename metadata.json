@@ -1,0 +1,6 @@
+{
+  "name": "Wilde Muschel - Podcast Konzept & One-Page Website",
+  "description": "Offizielles One-Page Konzept und interaktive Web-Experience für den Podcast 'Wilde Muschel' mit Audioplayer, Kiez-Guschel Orakel und Next.js/Tailwind/GSAP Architektur.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
