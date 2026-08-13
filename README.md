@@ -1,8 +1,22 @@
-# Wilde Muschel
+# 🐚 Wilde Muschel
 
 **Ungeschminkt. Ehrlich. Kiez.**
 
+[![Live Site](https://img.shields.io/badge/Live-wilde--muschel.vercel.app-000000?style=for-the-badge&logo=vercel)](https://wilde-muschel.vercel.app/)
+[![Hamburg](https://img.shields.io/badge/Hamburg-St.%20Pauli-red?style=for-the-badge)](https://en.wikipedia.org/wiki/St._Pauli)
+[![License](https://img.shields.io/badge/License-Proprietary-blue?style=for-the-badge)](#-license)
+
 Wer ist die Wilde Muschel? Keine geschönte Kunstfigur, keine Heuchelei. Eine 47-jährige St. Pauli-Ikone packt aus — ungeniert, ehrlich und voller Herz.
+
+**[🌐 Visit Live Site](https://wilde-muschel.vercel.app/)** • **[📧 Contact](mailto:chosenfewrecords@hotmail.de)**
+
+---
+
+## 📺 Vom Rotlicht zur ungeschminkten Wahrheit
+
+Die Gastgeberin von „Wilde Muschel“ ist eine 47-jährige St. Pauli-Ikone mit unverwechselbarer Ausstrahlung: Ein unverkennbares Markenzeichen sind ihre stolzen Kurven und ihr beachtlicher Booty, gepaart mit der Fähigkeit, frei Schnauze zu erzählen, wie es sonst keine zweite kann.
+
+Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
 
 ---
 
@@ -41,6 +55,25 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 
 ---
 
+## 🚀 Features
+
+- **Authentische Stimme** — Keine Kunstfigur, keine Persona-Simulation. Echt.
+- **Kiez-Stories** — Leben, Humor und Wahrheit aus St. Pauli
+- **Rotlicht Insider** — Jahrelange Erfahrung, ungefiltert erzählt
+- **Warmherziger Humor** — Lachen ohne Schadenfreude
+- **Soziale Kritik mit Herz** — Menschlichkeit statt Moralisierung
+
+---
+
+## 📦 Tech Stack
+
+- **Frontend:** Vercel deployment (Google AI Studio)
+- **Hosting:** https://wilde-muschel.vercel.app/
+- **Version Control:** GitHub
+- **License:** Proprietary Personal Brand
+
+---
+
 ## 🌍 Wilde Muschel Ecosystem
 
 Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://nagafilms-studio.vercel.app/) (generative cinema).
@@ -56,7 +89,8 @@ Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired 
 
 **Email:** chosenfewrecords@hotmail.de  
 **Location:** Hamburg, St. Pauli, Germany  
-**Vibe:** Ungeschminkt. Immer.
+**Vibe:** Ungeschminkt. Immer.  
+**Live:** [wilde-muschel.vercel.app](https://wilde-muschel.vercel.app/)
 
 ---
 
