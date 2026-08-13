@@ -66,13 +66,31 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 **HER MERKMAL — The Signature Trademark:**
 Her iconic, unmistakable curves and that legendary booty are CORE to her brand. Not a side note — the headline. She wears it with pride, owns the room with it, and it's authentically HER. No apologies. No filters. Pure Kiez confidence.
 
-**Visual Series:**
+---
 
-**Trademark Collection:**
-1. **Signature Trademark** — Displaying iconic curves with total pride and swagger. Confidence radiates.
-2. **Unmistakable Feature** — Her most legendary attribute celebrated in bold pop art. THAT'S the brand.
-3. **The Brand Trademark** — Powerful pose showcasing the famous curves that define her. St. Pauli queen energy.
-4. **Iconic Curves Brand** — Distinctive feature that makes her unmistakable. High fashion meets street soul.
+### Trademark Collection — 4 Visual Statements
+
+#### 1️⃣ Signature Trademark
+*Displaying iconic curves with total pride and swagger. Confidence radiates.*
+
+![Signature Trademark](https://pub.hyperagent.com/api/published/pbf01KZX82R6A_Y2TGT13TEWMTPDP1/d198ed92-61bd-49d7-9f7e-41a578c58815.png)
+
+#### 2️⃣ Unmistakable Feature
+*Her most legendary attribute celebrated in bold pop art. THAT'S the brand.*
+
+![Unmistakable Feature](https://pub.hyperagent.com/api/published/pbf01KZX82RK8_Q35N8CYW6JTKZGHP/9c18c3ce-d297-43c8-a621-e62825b0cfe7.png)
+
+#### 3️⃣ The Brand Trademark
+*Powerful pose showcasing the famous curves that define her. St. Pauli queen energy.*
+
+![The Brand Trademark](https://pub.hyperagent.com/api/published/pbf01KZX82S0G_1MBH06JZFZPJ3N40/3129b143-510c-432c-9980-9ae6f7930628.png)
+
+#### 4️⃣ Iconic Curves Brand
+*Distinctive feature that makes her unmistakable. High fashion meets street soul.*
+
+![Iconic Curves Brand](https://pub.hyperagent.com/api/published/pbf01KZX82SE9_X0WJFXZJWTVJJ0AY/df879f08-4abe-4351-930c-1f87648c5f6e.png)
+
+---
 
 **Classic Series:**
 - **Hero Portrait** — Full confidence, slamming curves, powerful stance
