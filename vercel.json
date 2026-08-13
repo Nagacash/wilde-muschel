@@ -3,6 +3,9 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/feed.xml",              "destination": "/api/feed" },
+    { "source": "/rss.xml",               "destination": "/api/feed" },
+    { "source": "/podcast/feed",          "destination": "/api/feed" },
+    { "source": "/((?!api/).*)",          "destination": "/index.html" }
   ]
 }
