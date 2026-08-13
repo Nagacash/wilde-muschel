@@ -14,7 +14,7 @@ Wer ist die Wilde Muschel? Keine geschönte Kunstfigur, keine Heuchelei. Eine 47
 
 ## 📺 Vom Rotlicht zur ungeschminkten Wahrheit
 
-Die Gastgeberin von „Wilde Muschel“ ist eine 47-jährige St. Pauli-Ikone mit unverwechselbarer Ausstrahlung: Ein unverkennbares Markenzeichen sind ihre stolzen Kurven und ihr beachtlicher Booty, gepaart mit der Fähigkeit, frei Schnauze zu erzählen, wie es sonst keine zweite kann.
+Die Gastgeberin von „Wilde Muschel" ist eine 47-jährige St. Pauli-Ikone mit unverwechselbarer Ausstrahlung: Ein unverkennbares Markenzeichen sind ihre stolzen Kurven und ihr beachtlicher Booty, gepaart mit der Fähigkeit, frei Schnauze zu erzählen, wie es sonst keine zweite kann.
 
 Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
 
@@ -55,7 +55,7 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 
 ---
 
-## 🎯 Visual Identity
+## 🎨 Visual Identity
 
 ### Bad Bitch Aesthetic — Blonde, Confident, No Apologies
 
@@ -63,7 +63,18 @@ Authentizität statt Instagram-Glitter. Echte Stimmen aus dem Kiez. Geschichten,
 
 **Color Palette:** Vibrant pop-art style • Teal & Magenta • Gold accents • Bold, energetic • Comic book illustration quality
 
+**HER MERKMAL — The Signature Trademark:**
+Her iconic, unmistakable curves and that legendary booty are CORE to her brand. Not a side note — the headline. She wears it with pride, owns the room with it, and it's authentically HER. No apologies. No filters. Pure Kiez confidence.
+
 **Visual Series:**
+
+**Trademark Collection:**
+1. **Signature Trademark** — Displaying iconic curves with total pride and swagger. Confidence radiates.
+2. **Unmistakable Feature** — Her most legendary attribute celebrated in bold pop art. THAT'S the brand.
+3. **The Brand Trademark** — Powerful pose showcasing the famous curves that define her. St. Pauli queen energy.
+4. **Iconic Curves Brand** — Distinctive feature that makes her unmistakable. High fashion meets street soul.
+
+**Classic Series:**
 - **Hero Portrait** — Full confidence, slamming curves, powerful stance
 - **Kiez Vibes** — Urban Hamburg backdrop, street culture energy, real talk ready
 - **Storyteller Mode** — Speaking that unfiltered truth, animated expression, hand gestures
@@ -92,7 +103,7 @@ Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired 
 
 ---
 
-## 📦 Tech Stack
+## 🛠 Tech Stack
 
 - **Frontend:** Vercel deployment (Google AI Studio)
 - **Hosting:** https://wilde-muschel.vercel.app/
@@ -105,8 +116,7 @@ Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired 
 
 **Email:** chosenfewrecords@hotmail.de  
 **Location:** Hamburg, St. Pauli, Germany  
-**Vibe:** Ungeschminkt. Immer.  
-**Live:** [wilde-muschel.vercel.app](https://wilde-muschel.vercel.app/)
+**Vibe:** Ungeschminkt. Immer.
 
 ---
 
