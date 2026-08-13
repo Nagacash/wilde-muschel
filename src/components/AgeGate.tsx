@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ShieldAlert, Check, X, Volume2, VolumeX } from 'lucide-react';
 import { PODCAST_INFO } from '../data/podcastData';
-import { PAGE_META, applyDocumentMeta, metaFromHash } from '../seo';
 import heroArt from '../assets/hero-wilde-muschel.png';
 import gateClip from '../assets/anja.mp4';
 import landingBed from '../assets/landing.mp3';
@@ -20,11 +19,9 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
   const userMutedRef = useRef(false);
 
   useLayoutEffect(() => {
-    try {
-      setVerified(window.localStorage.getItem(AGE_KEY) === '1');
-    } catch {
-      setVerified(false);
-    }
+    // Always show age gate on fresh page load
+    // Age verification is only valid for current session (not persisted)
+    setVerified(false);
   }, []);
 
   useEffect(() => {
@@ -62,17 +59,6 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
     };
   }, [verified]);
 
-  useEffect(() => {
-    if (verified === false) {
-      applyDocumentMeta(PAGE_META.landing.title, PAGE_META.landing.description);
-      return;
-    }
-    if (verified === true) {
-      const meta = metaFromHash(window.location.hash);
-      applyDocumentMeta(meta.title, meta.description);
-    }
-  }, [verified]);
-
   const enterSite = () => {
     try {
       window.localStorage.setItem(AGE_KEY, '1');
@@ -107,12 +93,7 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-[100] bg-sky overflow-hidden"
-      role="main"
-      aria-labelledby="landing-title"
-      data-page="landing"
-    >
+    <div className="fixed inset-0 z-[100] bg-sky overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroArt}
@@ -157,11 +138,11 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
       </button>
 
       <div className="relative z-10 min-h-svh flex flex-col items-center justify-end pb-16 px-4 text-center">
-        <h1 id="landing-title" className="font-anton hero-title-stamp text-[clamp(3rem,10vw,6.5rem)] leading-none mb-4">
+        <p className="font-anton hero-title-stamp text-[clamp(3rem,10vw,6.5rem)] leading-none mb-4">
           WILDE
           <br />
           MUSCHEL
-        </h1>
+        </p>
         <p className="text-cream text-base sm:text-lg font-semibold max-w-md mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
           Podcast mit verschiedenen Facetten. 18+ Real Talk vom Kiez.
         </p>
