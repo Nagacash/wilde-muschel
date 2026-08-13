@@ -16,7 +16,7 @@ Wer ist die Wilde Muschel? Keine geschönte Kunstfigur, keine Heuchelei. Eine 47
 
 Die Gastgeberin von „Wilde Muschel" ist eine 47-jährige St. Pauli-Ikone mit unverwechselbarer Ausstrahlung: Ein unverkennbares Markenzeichen sind ihre stolzen Kurven und ihr beachtlicher Booty, gepaart mit der Fähigkeit, frei Schnauze zu erzählen, wie es sonst keine zweite kann.
 
-Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
+Zwei Jahre arbeitete sie im Hamburger Rotlichtmilieu. Danach hinter den Kulissen. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
 
 ---
 
@@ -33,7 +33,7 @@ Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder
 
 ## 📖 Die Stories
 
-Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll — sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
+Zwei Jahre arbeitete sie im Hamburger Rotlichtmilieu. Danach hinter den Kulissen. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll — sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
 
 **Themen:**
 - Leben im Rotlicht — ungefilterte Wahrheit
@@ -115,7 +115,7 @@ Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired 
 
 - **Authentische Stimme** — Keine Kunstfigur, keine Persona-Simulation. Echt.
 - **Kiez-Stories** — Leben, Humor und Wahrheit aus St. Pauli
-- **Rotlicht Insider** — Jahrelange Erfahrung, ungefiltert erzählt
+- **Rotlicht Insider** — Zwei Jahre im Milieu, danach hinter den Kulissen, ungefiltert erzählt
 - **Warmherziger Humor** — Lachen ohne Schadenfreude
 - **Soziale Kritik mit Herz** — Menschlichkeit statt Moralisierung
 

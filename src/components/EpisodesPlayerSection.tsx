@@ -88,7 +88,12 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
   };
 
   return (
-    <section id="episodes" className="py-20 bg-[#050505] border-t border-[#1a1a1a] relative">
+    <section
+      id="episodes"
+      className="py-20 bg-[#050505] border-t border-[#1a1a1a] relative"
+      aria-labelledby="folgen-title"
+      data-page="folgen"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Title */}
@@ -96,8 +101,8 @@ export const EpisodesPlayerSection: React.FC<EpisodesPlayerSectionProps> = ({
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121212] border border-[#2a2a2a] text-[#D4AF37] text-[11px] font-semibold tracking-[0.25em] uppercase">
             <Radio className="w-3.5 h-3.5 text-[#D4AF37]" /> PODCAST PLAYER & EPISODEN
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F5] tracking-tight font-cinzel">
-            Guschel-Radio: <span className="text-[#FF2D55]">Alle Folgen</span>
+          <h2 id="folgen-title" className="text-3xl sm:text-5xl font-black text-[#F5F5F5] tracking-tight font-cinzel">
+            Folgen: Guschel-Radio — <span className="text-[#FF2D55]">Alle Folgen</span>
           </h2>
           <p className="text-base sm:text-lg text-[#A0A0A0]">
             Direkt im integrierten Player anhören. Wählen Sie eine Folge oder stöbern Sie nach Themen.

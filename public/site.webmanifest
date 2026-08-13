@@ -1,0 +1,25 @@
+{
+  "name": "Wilde Muschel",
+  "short_name": "Wilde Muschel",
+  "description": "18+ Real Talk vom Kiez. Wilde Guschel über ihre Muschel.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "de",
+  "background_color": "#050505",
+  "theme_color": "#ff2d55",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

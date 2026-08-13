@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Sparkles, HeartHandshake, Shield, CheckCircle, Flame, MessageCircle, AlertCircle, Camera, Heart } from 'lucide-react';
-import { HOST_IMAGE_URL, HOST_CURVY_IMAGE_URL, TRADEMARK_IMAGES } from '../data/podcastData';
+import { Sparkles, HeartHandshake, Shield, CheckCircle, Flame, MessageCircle, AlertCircle, Heart } from 'lucide-react';
+import { CHARACTER_SHOTS, TRADEMARK_IMAGES } from '../data/podcastData';
 
 export const AboutSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'persona' | 'philosophie'>('persona');
-  const [selectedImg, setSelectedImg] = useState<'studio' | 'silhouette'>('studio');
+  const [selectedShot, setSelectedShot] = useState<(typeof CHARACTER_SHOTS)[number]['id']>('curves');
 
   return (
-    <section id="ueber" className="py-20 bg-[#050505] border-t border-[#1a1a1a] relative overflow-hidden">
+    <section
+      id="ueber"
+      className="py-20 bg-[#050505] border-t border-[#1a1a1a] relative overflow-hidden"
+      aria-labelledby="ueber-title"
+      data-page="ueber"
+    >
       
       {/* Background Neon Accent */}
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-[#FF2D55]/10 rounded-full blur-3xl pointer-events-none" />
@@ -20,8 +25,8 @@ export const AboutSection: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121212] border border-[#2a2a2a] text-[#D4AF37] text-[11px] font-semibold tracking-[0.25em] uppercase">
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> DIE FRAU HINTER DER GUSCHEL
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-[#F5F5F5] tracking-tight font-cinzel">
-            Wer ist die <span className="text-[#FF2D55]">Wilde Muschel</span>?
+          <h2 id="ueber-title" className="text-3xl sm:text-5xl font-black text-[#F5F5F5] tracking-tight font-cinzel">
+            Über: Wer ist die <span className="text-[#FF2D55]">Wilde Muschel</span>?
           </h2>
           <p className="text-base sm:text-lg text-[#A0A0A0]">
             Keine geschönte Kunstfigur, keine Heuchelei. Eine 47-jährige St. Pauli-Ikone packt aus – ungeniert, ehrlich und voller Herz.
@@ -55,54 +60,43 @@ export const AboutSection: React.FC = () => {
         </div>
 
         {/* Tab Content Display */}
-        {activeTab === 'persona' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Column: Image Card & Gallery Switcher */}
-            <div className="lg:col-span-5 space-y-3">
-              <div className="relative rounded-2xl overflow-hidden border border-[#2a2a2a] shadow-2xl bg-[#0A0A0A]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-12">
+          {CHARACTER_SHOTS.map((shot) => {
+            const isActive = selectedShot === shot.id;
+            return (
+              <button
+                key={shot.id}
+                type="button"
+                onClick={() => {
+                  setSelectedShot(shot.id);
+                  setActiveTab('persona');
+                }}
+                className={`group relative rounded-2xl overflow-hidden border text-left cursor-pointer outline-solid outline-1 outline-black/20 -outline-offset-1 transition-[border-color,box-shadow] duration-base ease-out-expo ${
+                  isActive
+                    ? 'border-rotlicht shadow-glow-pink'
+                    : 'border-line hover:border-gold/60'
+                }`}
+              >
                 <img
-                  src={selectedImg === 'studio' ? HOST_IMAGE_URL : HOST_CURVY_IMAGE_URL}
-                  alt="Wilde Muschel Host Portrait"
-                  className="w-full h-80 sm:h-96 object-cover transition-all duration-300"
-                  referrerPolicy="no-referrer"
+                  src={shot.src}
+                  alt={shot.alt}
+                  className="w-full aspect-4/3 object-cover group-hover:scale-[1.03] transition-transform duration-slow ease-out-quart motion-reduce:transform-none motion-reduce:transition-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90 pointer-events-none" />
-                <div className="absolute bottom-4 left-4 right-4 text-[#F5F5F5] pointer-events-none">
-                  <p className="text-[10px] uppercase text-[#D4AF37] tracking-[0.2em] font-semibold">
-                    {selectedImg === 'studio' ? 'Studio Portrait' : 'Kiez Silhouette & Kurven'}
+                <div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-gold">
+                    {shot.kicker}
                   </p>
-                  <p className="text-base sm:text-lg font-bold font-cinzel">47 Jahre • St. Pauli Original</p>
+                  <p className="font-cinzel text-sm sm:text-base text-cream">{shot.title}</p>
                 </div>
-              </div>
+              </button>
+            );
+          })}
+        </div>
 
-              {/* Image Selector Buttons */}
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => setSelectedImg('studio')}
-                  className={`p-2 rounded-xl border text-xs font-medium flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                    selectedImg === 'studio'
-                      ? 'bg-[#121212] border-[#FF2D55] text-[#FF2D55]'
-                      : 'bg-[#0A0A0A] border-[#2a2a2a] text-[#888] hover:text-[#F5F5F5]'
-                  }`}
-                >
-                  <Camera className="w-3.5 h-3.5" /> Studio-Porträt
-                </button>
-                <button
-                  onClick={() => setSelectedImg('silhouette')}
-                  className={`p-2 rounded-xl border text-xs font-medium flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                    selectedImg === 'silhouette'
-                      ? 'bg-[#121212] border-[#FF2D55] text-[#FF2D55]'
-                      : 'bg-[#0A0A0A] border-[#2a2a2a] text-[#888] hover:text-[#F5F5F5]'
-                  }`}
-                >
-                  <Flame className="w-3.5 h-3.5" /> Kiez-Silhouette
-                </button>
-              </div>
-            </div>
-
-            {/* Right Column: Persona Description */}
-            <div className="lg:col-span-7 space-y-6">
+        {activeTab === 'persona' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-12 space-y-6 max-w-4xl">
               
               <div className="space-y-4">
                 <h3 className="text-2xl font-bold text-[#F5F5F5] font-cinzel flex items-center gap-2">
@@ -112,7 +106,7 @@ export const AboutSection: React.FC = () => {
                   Die Gastgeberin von „Wilde Muschel“ ist eine 47-jährige St. Pauli-Ikone mit unverwechselbarer Ausstrahlung: Ein unverkennbares Markenzeichen sind ihre stolzen Kurven und ihr beachtlicher Booty, gepaart mit der Fähigkeit, frei Schnauze zu erzählen, wie es sonst keine zweite kann.
                 </p>
                 <p className="text-[#A0A0A0] leading-relaxed">
-                  Jahrelang arbeitete sie im Hamburger Rotlichtmilieu. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
+                  Zwei Jahre arbeitete sie im Hamburger Rotlichtmilieu. Danach hinter den Kulissen. Ihre Geschichten sind weder romantisierte Fiktion noch voyeuristischer Müll – sie redet schlagfertig, spritzig, direkt und zutiefst menschlich über alles, was auf und neben dem Kiez passiert.
                 </p>
               </div>
 
@@ -155,18 +149,18 @@ export const AboutSection: React.FC = () => {
         )}
 
         {activeTab === 'philosophie' && (
-          <div className=”p-8 rounded-2xl bg-[#121212] border border-[#2a2a2a] space-y-6”>
-            <div className=”flex items-start gap-4”>
-              <div className=”p-3 rounded-full bg-[#FF2D55]/20 text-[#FF2D55] shrink-0”>
-                <AlertCircle className=”w-6 h-6” />
+          <div className="p-8 rounded-2xl bg-[#121212] border border-[#2a2a2a] space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="p-3 rounded-full bg-[#FF2D55]/20 text-[#FF2D55] shrink-0">
+                <AlertCircle className="w-6 h-6" />
               </div>
-              <div className=”space-y-2”>
-                <h4 className=”text-xl font-bold text-[#F5F5F5] font-cinzel”>Keine Pornografie – Nur echte Geschichten</h4>
-                <p className=”text-sm text-[#A0A0A0] leading-relaxed”>
-                  „Wilde Muschel” verzichtet bewusst auf günstige Vulgarität oder Hardcore-Inhalte. Es ist eine Unterhaltungssendung für Erwachsene, die sich mit Vorurteilen, menschlicher Psychologie und ungeschminkter Realität auseinandersetzt.
+              <div className="space-y-2">
+                <h4 className="text-xl font-bold text-[#F5F5F5] font-cinzel">Keine Pornografie – Nur echte Geschichten</h4>
+                <p className="text-sm text-[#A0A0A0] leading-relaxed">
+                  „Wilde Muschel“ verzichtet bewusst auf günstige Vulgarität oder Hardcore-Inhalte. Es ist eine Unterhaltungssendung für Erwachsene, die sich mit Vorurteilen, menschlicher Psychologie und ungeschminkter Realität auseinandersetzt.
                 </p>
-                <div className=”pt-2 text-xs text-[#D4AF37] font-serif-italic”>
-                  „Wer die Wahrheit sucht, findet sie oft auf der Reeperbahn – nachts um halb zwei!”
+                <div className="pt-2 text-xs text-[#D4AF37] font-serif-italic">
+                  „Wer die Wahrheit sucht, findet sie oft auf der Reeperbahn – nachts um halb zwei!“
                 </div>
               </div>
             </div>
@@ -174,46 +168,43 @@ export const AboutSection: React.FC = () => {
         )}
 
         {/* TRADEMARK COLLECTION SECTION */}
-        <div className=”mt-20 pt-20 border-t border-[#2a2a2a]”>
-          <div className=”text-center max-w-3xl mx-auto mb-12 space-y-3”>
-            <div className=”inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121212] border border-[#2a2a2a] text-[#FF2D55] text-[11px] font-semibold tracking-[0.25em] uppercase”>
-              <Heart className=”w-3.5 h-3.5 text-[#FF2D55]” /> HER MERKMAL
+        <div className="mt-20 pt-20 border-t border-[#2a2a2a]">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121212] border border-[#2a2a2a] text-[#FF2D55] text-[11px] font-semibold tracking-[0.25em] uppercase">
+              <Heart className="w-3.5 h-3.5 text-[#FF2D55]" /> HER MERKMAL
             </div>
-            <h3 className=”text-2xl sm:text-4xl font-black text-[#F5F5F5] tracking-tight font-cinzel”>
-              Die <span className=”text-[#FF2D55]”>Signature Trademark</span>
+            <h3 className="text-2xl sm:text-4xl font-black text-[#F5F5F5] tracking-tight font-cinzel">
+              Die <span className="text-[#FF2D55]">Signature Trademark</span>
             </h3>
-            <p className=”text-base text-[#A0A0A0]”>
+            <p className="text-base text-[#A0A0A0]">
               Iconic curves and legendary confidence. THAT'S the brand — no apologies, pure kiez swagger.
             </p>
           </div>
 
-          {/* Trademark Gallery Grid */}
-          <div className=”grid grid-cols-1 md:grid-cols-2 gap-6”>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {TRADEMARK_IMAGES.map((image) => (
               <div
                 key={image.id}
-                className=”group relative rounded-xl overflow-hidden border border-[#2a2a2a] hover:border-[#FF2D55] transition-all duration-300 bg-[#0A0A0A] shadow-lg hover:shadow-[0_0_20px_rgba(255,45,85,0.3)]”
+                className="group relative rounded-xl overflow-hidden border border-[#2a2a2a] hover:border-[#FF2D55] transition-[border-color,box-shadow] duration-base bg-[#0A0A0A] shadow-lg hover:shadow-[0_0_20px_rgba(255,45,85,0.3)]"
               >
-                {/* Image Container */}
-                <div className=”relative overflow-hidden h-80 sm:h-96”>
+                <div className="relative overflow-hidden h-80 sm:h-96">
                   <img
                     src={image.url}
                     alt={image.title}
-                    className=”w-full h-full object-cover group-hover:scale-105 transition-transform duration-500”
-                    referrerPolicy=”no-referrer”
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-slow motion-reduce:transform-none"
+                    referrerPolicy="no-referrer"
                   />
-                  <div className=”absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity” />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-base" />
                 </div>
 
-                {/* Content Overlay */}
-                <div className=”absolute bottom-0 left-0 right-0 p-4 space-y-2”>
-                  <p className=”text-[10px] uppercase text-[#FF2D55] tracking-[0.2em] font-semibold”>
+                <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
+                  <p className="text-[10px] uppercase text-[#FF2D55] tracking-[0.2em] font-semibold">
                     Trademark Collection
                   </p>
-                  <h4 className=”text-base sm:text-lg font-bold text-[#F5F5F5] font-cinzel”>
+                  <h4 className="text-base sm:text-lg font-bold text-[#F5F5F5] font-cinzel">
                     {image.title}
                   </h4>
-                  <p className=”text-xs text-[#D4AF37] line-clamp-2”>
+                  <p className="text-xs text-[#D4AF37] line-clamp-2">
                     {image.description}
                   </p>
                 </div>

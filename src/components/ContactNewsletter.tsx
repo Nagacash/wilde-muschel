@@ -27,9 +27,25 @@ export const ContactNewsletter: React.FC = () => {
   };
 
   return (
-    <section id="kontakt" className="pt-20 pb-10 bg-kiez border-t border-line relative">
+    <section
+      id="kontakt"
+      className="pt-20 pb-10 bg-kiez border-t border-line relative"
+      aria-labelledby="kontakt-title"
+      data-page="kontakt"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-panel border border-line text-rotlicht text-[11px] font-semibold tracking-[0.25em] uppercase">
+            <Mail className="w-3.5 h-3.5" /> KONTAKT
+          </div>
+          <h2 id="kontakt-title" className="text-3xl sm:text-5xl font-black text-cream tracking-tight font-cinzel">
+            Kontakt <span className="text-rotlicht">Wilde Muschel</span>
+          </h2>
+          <p className="text-base sm:text-lg text-muted">
+            Kiez-Post Newsletter und Nachrichten an die Guschel.
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Kiez-Post Newsletter */}

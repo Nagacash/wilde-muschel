@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, ShieldAlert } from 'lucide-react';
 import { PODCAST_INFO } from '../data/podcastData';
+import { PAGE_META, applyDocumentMeta } from '../seo';
 
 const sections: { id: string; title: string; body: React.ReactNode }[] = [
   {
@@ -133,10 +134,11 @@ const sections: { id: string; title: string; body: React.ReactNode }[] = [
 export const PolicyPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    applyDocumentMeta(PAGE_META.richtlinien.title, PAGE_META.richtlinien.description);
   }, []);
 
   return (
-    <div className="min-h-svh bg-kiez text-cream">
+    <div className="min-h-svh bg-kiez text-cream" data-page="richtlinien">
       <header className="sticky top-0 z-50 border-b border-line bg-kiez/85 backdrop-blur-md">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
           <a
@@ -161,11 +163,11 @@ export const PolicyPage: React.FC = () => {
           18+
         </p>
 
-        <article className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-24">
+        <article className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-24" aria-labelledby="richtlinien-title">
           <p className="text-gold text-xs font-semibold tracking-[0.22em] uppercase mb-3">
             Rechtliches
           </p>
-          <h1 className="font-cinzel text-3xl sm:text-4xl text-cream text-balance mb-4">
+          <h1 id="richtlinien-title" className="font-cinzel text-3xl sm:text-4xl text-cream text-balance mb-4">
             Datenschutz &amp; Richtlinien
           </h1>
           <p className="text-muted text-base leading-relaxed max-w-[68ch] mb-12">

@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ShieldAlert, Check, X, Volume2, VolumeX } from 'lucide-react';
 import { PODCAST_INFO } from '../data/podcastData';
+import { PAGE_META, applyDocumentMeta, metaFromHash } from '../seo';
 import heroArt from '../assets/hero-wilde-muschel.png';
 import gateClip from '../assets/anja.mp4';
 import landingBed from '../assets/landing.mp3';
@@ -61,6 +62,17 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
     };
   }, [verified]);
 
+  useEffect(() => {
+    if (verified === false) {
+      applyDocumentMeta(PAGE_META.landing.title, PAGE_META.landing.description);
+      return;
+    }
+    if (verified === true) {
+      const meta = metaFromHash(window.location.hash);
+      applyDocumentMeta(meta.title, meta.description);
+    }
+  }, [verified]);
+
   const enterSite = () => {
     try {
       window.localStorage.setItem(AGE_KEY, '1');
@@ -95,7 +107,12 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] bg-sky overflow-hidden">
+    <div
+      className="fixed inset-0 z-[100] bg-sky overflow-hidden"
+      role="main"
+      aria-labelledby="landing-title"
+      data-page="landing"
+    >
       <div className="absolute inset-0">
         <img
           src={heroArt}
@@ -140,11 +157,11 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
       </button>
 
       <div className="relative z-10 min-h-svh flex flex-col items-center justify-end pb-16 px-4 text-center">
-        <p className="font-anton hero-title-stamp text-[clamp(3rem,10vw,6.5rem)] leading-none mb-4">
+        <h1 id="landing-title" className="font-anton hero-title-stamp text-[clamp(3rem,10vw,6.5rem)] leading-none mb-4">
           WILDE
           <br />
           MUSCHEL
-        </p>
+        </h1>
         <p className="text-cream text-base sm:text-lg font-semibold max-w-md mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
           Podcast mit verschiedenen Facetten. 18+ Real Talk vom Kiez.
         </p>

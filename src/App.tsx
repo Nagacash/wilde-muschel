@@ -10,6 +10,7 @@ import { AgeGate } from './components/AgeGate';
 import { PolicyPage } from './components/PolicyPage';
 import { SAMPLE_EPISODES } from './data/podcastData';
 import { Episode } from './types';
+import { applyDocumentMeta, metaFromHash } from './seo';
 
 const isPolicyHash = (hash: string) =>
   hash === '#/richtlinien' || hash === '#richtlinien';
@@ -33,6 +34,12 @@ export default function App() {
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
   }, []);
+
+  useEffect(() => {
+    if (isPolicyHash(hash)) return;
+    const meta = metaFromHash(hash);
+    applyDocumentMeta(meta.title, meta.description);
+  }, [hash]);
 
   // Check URL query param for shared episode link on mount
   useEffect(() => {
@@ -163,7 +170,7 @@ export default function App() {
       />
 
       {/* Main Content Sections */}
-      <main>
+      <main id="site-main" aria-label="Wilde Muschel — Home, Über, Themen, Folgen, Kontakt">
         {/* 1. Hero Section */}
         <HeroSection
           latestEpisode={episodes[0]}

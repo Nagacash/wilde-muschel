@@ -1,11 +1,40 @@
 import { Episode, KiezTopic } from '../types';
+import kiezVibesArt from '../assets/kiez-vibes.png';
+import legendaryBootyArt from '../assets/legendary-booty.png';
+import storytellerArt from '../assets/storyteller-energy.png';
+import podcastCover from '../assets/podcast-cover.png';
 
 // Image assets generated for Wilde Muschel
 export const HOST_IMAGE_URL = '/src/assets/images/wilde_muschel_host_1786604060045.jpg';
 export const HOST_CURVY_IMAGE_URL = '/src/assets/images/curvy_host_portrait_1786606115876.jpg';
 export const BANNER_IMAGE_URL = '/src/assets/images/wilde_muschel_banner_1786604073835.jpg';
-export const COVER_IMAGE_URL = '/src/assets/images/wilde_muschel_cover_1786604087047.jpg';
+export const COVER_IMAGE_URL = podcastCover;
 export const HERO_IMAGE_URL = '/src/assets/hero-wilde-muschel.png';
+
+export const CHARACTER_SHOTS = [
+  {
+    id: 'kiez',
+    src: kiezVibesArt,
+    kicker: 'Kiez Vibes',
+    title: 'St. Pauli Queen',
+    alt: 'Wilde Muschel auf dem Kiez — Bomberjacke, St. Pauli Patches, Neonnacht',
+  },
+  {
+    id: 'curves',
+    src: legendaryBootyArt,
+    kicker: 'Trademark',
+    title: 'Legendary Curves',
+    alt: 'Wilde Muschel — Legendary Curves, No Apologies, Reeperbahn',
+  },
+  {
+    id: 'story',
+    src: storytellerArt,
+    kicker: 'Frei Schnauze',
+    title: 'Storyteller Energy',
+    alt: 'Wilde Muschel erzählt — Storyteller Energy vor der Reeperbahn',
+  },
+] as const;
+
 export const GATE_VIDEO_URL =
   'https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/5d556d31-eaba-4e27-bffe-873a96e7d45c-F0cRnGZkuroJU6y8KzAL_A-output.mp4?x-kcdn-pid=112372';
 
@@ -64,7 +93,7 @@ export const SAMPLE_EPISODES: Episode[] = [
     publishDate: '10. August 2026',
     category: 'Reeperbahn',
     description: 'Im Premieren-Talk erzählt die Wilde Muschel, wie sie mit 20 auf dem Kiez landete, warum mit 47 Jahren Schluss mit Versteckspielen ist und was "Guschel über ihre Muschel" wirklich bedeutet.',
-    teaserSnippet: '„Mädels, wer 15 Jahre auf St. Pauli hinter den Kulissen gearbeitet hat, lässt sich von keinem Heuchler mehr die Welt erklären!“',
+    teaserSnippet: '„Mädels, wer zwei Jahre im Rotlicht stand und danach hinter den Kulissen weitergemacht hat, lässt sich von keinem Heuchler mehr die Welt erklären!“',
     tags: ['Premierenfolge', 'Reeperbahn', 'St. Pauli', 'Lebensweg'],
     audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-piano-10781.mp3',
     plays: 18420,
@@ -169,7 +198,7 @@ Die Atmosphäre ist nocturn und neongetränkt – schummriges Rotlicht, kühles 
     title: '4. Über Wilde Muschel',
     summary: 'Echte Frau, echte Narben, kein Sugarcoating',
     body: `Die Biografie der Gastgeberin als visuelles Story-Grid:
-1. **Ehemalige Prostituierte**: 15 Jahre Erfahrung auf der Reeperbahn – sie kennt Freier, Sehnsüchte, Ängste und die Abgründe.
+1. **Ehemalige Prostituierte**: Zwei Jahre im Hamburger Rotlichtmilieu, danach hinter den Kulissen – sie kennt Freier, Sehnsüchte, Ängste und die Abgründe.
 2. **Echte Frau mit 47**: Kein künstlicher Jugendwahn, sondern ungefiltertes Selbstbewusstsein, Rundungen und Lebensmut.
 3. **Der Name & Slogan**: "Guschel" ist der Hamburger Begriff für den Mund / die Schnüss. "Guschel über ihre Muschel" bringt das Konzept perfekt auf den Punkt: Freche Klappe trifft auf ehrliche Frauenperspektive.`
   },

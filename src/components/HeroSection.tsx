@@ -43,6 +43,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     <section
       id="hero"
       className="hero-billboard relative min-h-svh overflow-hidden"
+      aria-labelledby="home-title"
+      data-page="home"
     >
       <div className="hero-grain" />
 
@@ -75,7 +77,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span>18+</span>
           </div>
 
-          <h1 className="font-anton hero-title-stamp text-[clamp(3.4rem,11vw,7rem)]">
+          <h1 id="home-title" className="font-anton hero-title-stamp text-[clamp(3.4rem,11vw,7rem)]">
             <span className="block">WILDE</span>
             <span className="block">MUSCHEL</span>
           </h1>
