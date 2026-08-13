@@ -9,6 +9,31 @@ export const HERO_IMAGE_URL = '/src/assets/hero-wilde-muschel.png';
 export const GATE_VIDEO_URL =
   'https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/5d556d31-eaba-4e27-bffe-873a96e7d45c-F0cRnGZkuroJU6y8KzAL_A-output.mp4?x-kcdn-pid=112372';
 
+// Character Shots - Persona Gallery for About Section
+export const CHARACTER_SHOTS = [
+  {
+    id: 'curves',
+    src: 'https://pub.hyperagent.com/api/published/pbf01KZX82R6A_Y2TGT13TEWMTPDP1/d198ed92-61bd-49d7-9f7e-41a578c58815.png',
+    alt: 'Signature Trademark',
+    kicker: 'ICONIC FEATURE',
+    title: 'Signature Curves'
+  },
+  {
+    id: 'legend',
+    src: 'https://pub.hyperagent.com/api/published/pbf01KZX82RK8_Q35N8CYW6JTKZGHP/9c18c3ce-d297-43c8-a621-e62825b0cfe7.png',
+    alt: 'Unmistakable Feature',
+    kicker: 'THE BRAND',
+    title: 'Unmistakable Energy'
+  },
+  {
+    id: 'queen',
+    src: 'https://pub.hyperagent.com/api/published/pbf01KZX82S0G_1MBH06JZFZPJ3N40/3129b143-510c-432c-9980-9ae6f7930628.png',
+    alt: 'The Brand Trademark',
+    kicker: 'ST. PAULI QUEEN',
+    title: 'Powerful Confidence'
+  }
+];
+
 // Trademark Collection - Her Signature Feature (CDN hosted)
 export const TRADEMARK_IMAGES = [
   {
