@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { getVisitorId } from './lib/visitorId';
 import { Header } from './components/Header';
 import { AgeGate } from './components/AgeGate';
 import { PolicyPage } from './components/PolicyPage';
@@ -18,8 +19,8 @@ import {
   applyDocumentMeta,
 } from './seo';
 
-const PLAY_COUNT_BASE = 2412;
-const PLAY_COUNT_KEY = 'wm-extra-plays';
+// Seed shown before the API responds — avoids a flash of "0".
+const PLAY_COUNT_SEED = 2412;
 
 export default function App() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
@@ -32,38 +33,51 @@ export default function App() {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('Alle');
   const [oracleOpen, setOracleOpen] = useState<boolean>(false);
-  const [playCount, setPlayCount] = useState<number>(PLAY_COUNT_BASE);
+  const [playCount, setPlayCount] = useState<number>(PLAY_COUNT_SEED);
   const [playCountHighlight, setPlayCountHighlight] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const countedEpisodesRef = useRef<Set<string>>(new Set());
   const currentPage = routeKeyFromPath(pathname);
 
+  // Load real total from Neon on mount.
   useEffect(() => {
-    try {
-      const extra = Number(localStorage.getItem(PLAY_COUNT_KEY) || '0');
-      if (Number.isFinite(extra) && extra > 0) {
-        setPlayCount(PLAY_COUNT_BASE + extra);
-      }
-    } catch {
-      /* ignore */
-    }
+    fetch('/api/plays')
+      .then((r) => r.ok ? r.json() : Promise.reject(r))
+      .then((data: { counts?: Record<string, number> }) => {
+        const total = Object.values(data.counts || {}).reduce((s, n) => s + n, 0);
+        if (total > 0) setPlayCount(total);
+      })
+      .catch(() => { /* keep seed */ });
   }, []);
 
   const registerPlay = (episodeId: string) => {
     if (countedEpisodesRef.current.has(episodeId)) return;
     countedEpisodesRef.current.add(episodeId);
-    setPlayCount((n) => {
-      const next = n + 1;
-      try {
-        localStorage.setItem(PLAY_COUNT_KEY, String(next - PLAY_COUNT_BASE));
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
+
+    // Optimistic UI increment.
+    setPlayCount((n) => n + 1);
     setPlayCountHighlight(true);
     window.setTimeout(() => setPlayCountHighlight(false), 700);
+
+    // Persist to Neon — fire-and-forget; UI already updated.
+    fetch('/api/plays', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ episodeId, visitorId: getVisitorId() }),
+    })
+      .then((r) => r.ok ? r.json() : Promise.reject(r))
+      .then((data: { count?: number }) => {
+        // Reconcile with the server's real total across all episodes.
+        fetch('/api/plays')
+          .then((r) => r.ok ? r.json() : Promise.reject(r))
+          .then((all: { counts?: Record<string, number> }) => {
+            const total = Object.values(all.counts || {}).reduce((s, n) => s + n, 0);
+            if (total > 0) setPlayCount(total);
+          })
+          .catch(() => { /* keep optimistic */ });
+      })
+      .catch(() => { /* keep optimistic */ });
   };
 
   const navigate = useCallback((path: string) => {
