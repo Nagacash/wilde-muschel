@@ -1,3 +1,7 @@
+# Wilde Muschel — 18+ adult-oriented talk podcast (no explicit media).
+# Indexing is intentionally allowed; the site is labelled adult via the
+# RTA + rating meta tags so filters and SafeSearch can classify it correctly.
+
 User-agent: *
 Allow: /
 

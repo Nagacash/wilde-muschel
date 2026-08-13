@@ -1,69 +1,109 @@
 export const SITE_URL = 'https://wilde-muschel.vercel.app';
 export const SITE_NAME = 'Wilde Muschel';
 
-export const PAGE_META = {
-  landing: {
-    name: 'Landing',
-    title: 'Landing 18+ | Wilde Muschel Podcast',
-    description:
-      'Wilde Muschel Landing: 18+ Eintritt zum St. Pauli Podcast. Wilde Guschel über ihre Muschel.',
-  },
+/**
+ * Path-based routes. Hash fragments (#/folgen) are NOT distinct URLs to search
+ * engines — everything after '#' is stripped, so every hash route collapsed
+ * into the single homepage URL and could never rank on its own.
+ */
+export const ROUTES = {
+  home: '/',
+  ueber: '/ueber',
+  folgen: '/folgen',
+  kontakt: '/kontakt',
+  richtlinien: '/richtlinien',
+} as const;
+
+export type RouteKey = keyof typeof ROUTES;
+
+export const PAGE_META: Record<
+  RouteKey,
+  { name: string; title: string; description: string; path: string }
+> = {
   home: {
     name: 'Home',
-    title: 'Home | Wilde Muschel — St. Pauli Podcast',
+    path: ROUTES.home,
+    title: 'Wilde Muschel — 18+ Podcast vom Hamburger Kiez | St. Pauli',
     description:
-      'Wilde Muschel Home: 18+ Real Talk vom Kiez. Podcast mit Sex-Stories, Freier-Anekdoten und Hamburger Schnauze.',
+      'Ungeschminkter 18+ Podcast aus St. Pauli: Reeperbahn-Geschichten, Freier-Anekdoten und Real Talk mit Hamburger Schnauze. Jetzt reinhören.',
   },
   ueber: {
     name: 'Über',
-    title: 'Über Wilde Muschel | St. Pauli Podcast',
+    path: ROUTES.ueber,
+    title: 'Über die Wilde Muschel — 47, St. Pauli Original | Wilde Muschel',
     description:
-      'Wer ist die Wilde Muschel? 47, St. Pauli Original, ungeschminkte Geschichten vom Rotlicht und der Reeperbahn.',
-  },
-  themen: {
-    name: 'Themen',
-    title: 'Themen | Wilde Muschel Podcast',
-    description:
-      'Themen der Wilden Muschel: Reeperbahn, Freier, Sex-Stories und Real Talk vom Hamburger Kiez.',
+      'Wer ist die Wilde Muschel? 47 Jahre, St. Pauli Original, Jahre im Hamburger Rotlicht. Ungeschminkte Geschichten von der Reeperbahn — ohne Romantisierung.',
   },
   folgen: {
     name: 'Folgen',
-    title: 'Folgen | Wilde Muschel Podcast',
+    path: ROUTES.folgen,
+    title: 'Alle Folgen anhören — Kiez-Podcast | Wilde Muschel',
     description:
-      'Alle Folgen von Wilde Muschel anhören. Guschel-Radio direkt vom St. Pauli Kiez.',
+      'Alle Folgen von Wilde Muschel kostenlos anhören. Guschel-Radio direkt vom St. Pauli Kiez — Reeperbahn, Freier und Real Talk, 18+.',
   },
   kontakt: {
     name: 'Kontakt',
-    title: 'Kontakt | Wilde Muschel Podcast',
+    path: ROUTES.kontakt,
+    title: 'Kontakt & Kiez-Post | Wilde Muschel',
     description:
-      'Kontakt zur Wilden Muschel: Kiez-Post Newsletter und Nachrichten an die Guschel.',
+      'Kontakt zur Wilden Muschel: Kiez-Post Newsletter abonnieren und Nachrichten direkt an die Guschel schicken.',
   },
   richtlinien: {
     name: 'Datenschutz',
-    title: 'Datenschutz & Richtlinien | Wilde Muschel',
+    path: ROUTES.richtlinien,
+    title: 'Datenschutz, Jugendschutz & Impressum | Wilde Muschel',
     description:
-      'Datenschutz, Jugendschutz 18+, Nutzung und Impressum von Wilde Muschel.',
+      'Datenschutz, Jugendschutz (18+), Nutzungsbedingungen und Impressum von Wilde Muschel.',
   },
-} as const;
+};
 
-export function metaFromHash(hash: string) {
-  if (hash === '#/richtlinien' || hash === '#richtlinien') return PAGE_META.richtlinien;
-  if (hash === '#ueber') return PAGE_META.ueber;
-  if (hash === '#themen') return PAGE_META.themen;
-  if (hash === '#episodes') return PAGE_META.folgen;
-  if (hash === '#kontakt') return PAGE_META.kontakt;
-  return PAGE_META.home;
+/** Legacy hash links kept working so existing shares and bookmarks don't 404. */
+export const LEGACY_HASH_REDIRECTS: Record<string, string> = {
+  '#hero': ROUTES.home,
+  '#/hero': ROUTES.home,
+  '#ueber': ROUTES.ueber,
+  '#/ueber': ROUTES.ueber,
+  '#themen': ROUTES.ueber,
+  '#/themen': ROUTES.ueber,
+  '#episodes': ROUTES.folgen,
+  '#/episodes': ROUTES.folgen,
+  '#/folgen': ROUTES.folgen,
+  '#kontakt': ROUTES.kontakt,
+  '#/kontakt': ROUTES.kontakt,
+  '#richtlinien': ROUTES.richtlinien,
+  '#/richtlinien': ROUTES.richtlinien,
+};
+
+export function routeKeyFromPath(pathname: string): RouteKey {
+  const clean = pathname.replace(/\/+$/, '') || '/';
+  const hit = (Object.keys(ROUTES) as RouteKey[]).find((k) => ROUTES[k] === clean);
+  return hit ?? 'home';
 }
 
-export function applyDocumentMeta(title: string, description: string) {
+export function metaFromPath(pathname: string) {
+  return PAGE_META[routeKeyFromPath(pathname)];
+}
+
+/**
+ * Keeps title, description, canonical and social tags in sync on navigation.
+ * Canonical matters most here: without it every route would self-report the
+ * homepage URL and compete with itself.
+ */
+export function applyDocumentMeta(title: string, description: string, path: string) {
   document.title = title;
-  const set = (selector: string, attr: string, value: string) => {
+
+  const setAttr = (selector: string, attr: string, value: string) => {
     const el = document.querySelector(selector);
     if (el) el.setAttribute(attr, value);
   };
-  set('meta[name="description"]', 'content', description);
-  set('meta[property="og:title"]', 'content', title);
-  set('meta[property="og:description"]', 'content', description);
-  set('meta[name="twitter:title"]', 'content', title);
-  set('meta[name="twitter:description"]', 'content', description);
+
+  const absolute = `${SITE_URL}${path === '/' ? '/' : path}`;
+
+  setAttr('meta[name="description"]', 'content', description);
+  setAttr('meta[property="og:title"]', 'content', title);
+  setAttr('meta[property="og:description"]', 'content', description);
+  setAttr('meta[property="og:url"]', 'content', absolute);
+  setAttr('meta[name="twitter:title"]', 'content', title);
+  setAttr('meta[name="twitter:description"]', 'content', description);
+  setAttr('link[rel="canonical"]', 'href', absolute);
 }

@@ -7,6 +7,14 @@
     <meta name="description" content="Wilde Muschel Home: 18+ Real Talk vom Kiez. Podcast mit Sex-Stories, Freier-Anekdoten und Hamburger Schnauze." />
     <link rel="canonical" href="https://wilde-muschel.vercel.app/" />
     <meta name="theme-color" content="#ff2d55" />
+
+    <!-- Adult-content labelling. Lets search engines and family filters
+         classify the site correctly instead of guessing, and signals good
+         faith on age restriction. Indexing stays allowed; the content is
+         simply flagged 18+. -->
+    <meta name="rating" content="adult" />
+    <meta name="RATING" content="RTA-5042-1996-1400-1577-RTA" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
@@ -43,15 +51,45 @@
           "@type": "Person",
           "name": "Die Wilde Muschel"
         },
+        "genre": ["Society & Culture", "Personal Journals", "True Life"],
+        "keywords": "St. Pauli Podcast, Reeperbahn, Hamburg Kiez, Rotlicht, 18+ Podcast, Real Talk",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Naga Apparel",
+          "url": "https://nagaclub.de"
+        },
         "hasPart": [
-          { "@type": "WebPage", "name": "Landing", "url": "https://wilde-muschel.vercel.app/" },
-          { "@type": "WebPage", "name": "Home", "url": "https://wilde-muschel.vercel.app/#hero" },
-          { "@type": "WebPage", "name": "Über Wilde Muschel", "url": "https://wilde-muschel.vercel.app/#ueber" },
-          { "@type": "WebPage", "name": "Themen", "url": "https://wilde-muschel.vercel.app/#themen" },
-          { "@type": "WebPage", "name": "Folgen", "url": "https://wilde-muschel.vercel.app/#episodes" },
-          { "@type": "WebPage", "name": "Kontakt", "url": "https://wilde-muschel.vercel.app/#kontakt" },
-          { "@type": "WebPage", "name": "Datenschutz", "url": "https://wilde-muschel.vercel.app/#/richtlinien" }
+          { "@type": "WebPage", "name": "Home", "url": "https://wilde-muschel.vercel.app/" },
+          { "@type": "WebPage", "name": "Über Wilde Muschel", "url": "https://wilde-muschel.vercel.app/ueber" },
+          { "@type": "WebPage", "name": "Folgen", "url": "https://wilde-muschel.vercel.app/folgen" },
+          { "@type": "WebPage", "name": "Kontakt", "url": "https://wilde-muschel.vercel.app/kontakt" },
+          { "@type": "WebPage", "name": "Datenschutz", "url": "https://wilde-muschel.vercel.app/richtlinien" }
         ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "PodcastEpisode",
+        "url": "https://wilde-muschel.vercel.app/folgen",
+        "name": "Nachts um halb zwei auf der Ritze",
+        "episodeNumber": 1,
+        "datePublished": "2026-08-13",
+        "timeRequired": "PT2M33S",
+        "inLanguage": "de-DE",
+        "isFamilyFriendly": false,
+        "contentRating": "18+",
+        "description": "Im Premieren-Talk erzählt die Wilde Muschel, wie sie mit 20 auf dem Kiez landete und warum mit 47 Schluss mit Versteckspielen ist.",
+        "partOfSeries": {
+          "@type": "PodcastSeries",
+          "name": "Wilde Muschel",
+          "url": "https://wilde-muschel.vercel.app/"
+        },
+        "associatedMedia": {
+          "@type": "MediaObject",
+          "contentUrl": "https://pub.hyperagent.com/api/published/pbf01KZXE9ZN9_Y0HVKDP0SDQFCVVN/wilde%20muschel%20ep1.mp3",
+          "encodingFormat": "audio/mpeg"
+        }
       }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">

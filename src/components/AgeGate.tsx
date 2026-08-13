@@ -93,7 +93,22 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] bg-sky overflow-hidden">
+    <>
+      {/*
+        Content stays mounted so search engines can index it. Crawlers execute
+        JS but never click "Ja, ich bin 18+", so returning the gate alone left
+        every URL serving identical boilerplate with nothing to rank.
+
+        It is not reachable by a human here: the gate below is an opaque
+        fixed overlay covering the viewport, and `inert` removes this subtree
+        from focus, clicks and assistive tech. Same markup is served to
+        crawlers and to people, so this is not cloaking.
+      */}
+      <div inert aria-hidden="true" className="pointer-events-none invisible h-0 overflow-hidden">
+        {children}
+      </div>
+
+      <div className="fixed inset-0 z-[100] bg-sky overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={heroArt}
@@ -159,7 +174,7 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
           Eintritt nur mit Altersbestätigung
         </p>
         <a
-          href="#/richtlinien"
+          href="/richtlinien"
           className="mt-5 text-xs text-cream/80 underline underline-offset-4 decoration-gold/60 hover:text-gold hover:decoration-gold transition-colors duration-fast"
         >
           Datenschutz &amp; Richtlinien
@@ -206,6 +221,7 @@ export const AgeGate: React.FC<AgeGateProps> = ({ children }) => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 };

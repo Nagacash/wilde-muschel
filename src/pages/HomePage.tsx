@@ -1,14 +1,16 @@
 import React from 'react';
 import { HeroSection } from '../components/HeroSection';
 import { SAMPLE_EPISODES } from '../data/podcastData';
+import { ROUTES } from '../seo';
 
 interface HomePageProps {
   isPlaying: boolean;
   onPlayEpisode: (ep: any) => void;
   onOpenOracle: () => void;
+  onNavigate: (path: string) => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ isPlaying, onPlayEpisode, onOpenOracle }) => {
+export const HomePage: React.FC<HomePageProps> = ({ isPlaying, onPlayEpisode, onOpenOracle, onNavigate }) => {
   return (
     <main className="min-h-screen bg-[#050505]">
       <HeroSection
@@ -29,7 +31,11 @@ export const HomePage: React.FC<HomePageProps> = ({ isPlaying, onPlayEpisode, on
           </p>
           <div className="pt-4">
             <a
-              href="#/folgen"
+              href={ROUTES.folgen}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(ROUTES.folgen);
+              }}
               className="inline-block px-8 py-3 bg-[#FF2D55] hover:bg-[#FF2A85] text-white font-bold rounded-full transition-colors"
             >
               Zu den Folgen →

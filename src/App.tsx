@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
 import { AgeGate } from './components/AgeGate';
 import { PolicyPage } from './components/PolicyPage';
@@ -7,21 +7,19 @@ import { HomePage } from './pages/HomePage';
 import { UberPage } from './pages/UberPage';
 import { FolgenPage } from './pages/FolgenPage';
 import { KontaktPage } from './pages/KontaktPage';
+import { SiteFooter } from './components/SiteFooter';
 import { SAMPLE_EPISODES } from './data/podcastData';
 import { Episode } from './types';
-
-const isPolicyHash = (hash: string) =>
-  hash === '#/richtlinien' || hash === '#richtlinien';
-
-const getCurrentPage = (hash: string): string => {
-  if (hash === '#/uber') return 'uber';
-  if (hash === '#/folgen') return 'folgen';
-  if (hash === '#/kontakt') return 'kontakt';
-  return 'home';
-};
+import {
+  ROUTES,
+  LEGACY_HASH_REDIRECTS,
+  routeKeyFromPath,
+  metaFromPath,
+  applyDocumentMeta,
+} from './seo';
 
 export default function App() {
-  const [hash, setHash] = useState(() => window.location.hash || '#/');
+  const [pathname, setPathname] = useState(() => window.location.pathname);
   const [episodes] = useState<Episode[]>(SAMPLE_EPISODES);
   const [currentEpisode, setCurrentEpisode] = useState<Episode>(SAMPLE_EPISODES[0]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -33,13 +31,37 @@ export default function App() {
   const [oracleOpen, setOracleOpen] = useState<boolean>(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const currentPage = getCurrentPage(hash);
+  const currentPage = routeKeyFromPath(pathname);
 
-  useEffect(() => {
-    const sync = () => setHash(window.location.hash || '#/');
-    window.addEventListener('hashchange', sync);
-    return () => window.removeEventListener('hashchange', sync);
+  const navigate = useCallback((path: string) => {
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    setPathname(path);
+    window.scrollTo(0, 0);
   }, []);
+
+  // Back/forward buttons.
+  useEffect(() => {
+    const sync = () => setPathname(window.location.pathname);
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
+
+  // Old #/folgen style links still resolve — rewrite them to the real path once.
+  useEffect(() => {
+    const target = LEGACY_HASH_REDIRECTS[window.location.hash];
+    if (target) {
+      window.history.replaceState({}, '', target);
+      setPathname(target);
+    }
+  }, []);
+
+  // Per-route title, description and canonical.
+  useEffect(() => {
+    const meta = metaFromPath(pathname);
+    applyDocumentMeta(meta.title, meta.description, meta.path);
+  }, [pathname]);
 
   // Sync Audio Element
   useEffect(() => {
@@ -139,13 +161,13 @@ export default function App() {
     audioRef.current.muted = nextMuted;
   };
 
-  if (isPolicyHash(hash)) {
+  if (currentPage === 'richtlinien') {
     return <PolicyPage />;
   }
 
   return (
     <AgeGate>
-      <div className="min-h-screen bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
+      <div className="min-h-screen flex flex-col bg-[#050505] text-[#F5F5F5] font-sans selection:bg-[#FF2D55] selection:text-white">
 
         {/* Navigation Header */}
         <Header
@@ -153,6 +175,8 @@ export default function App() {
           isPlaying={isPlaying}
           onTogglePlay={togglePlay}
           onOpenOracle={() => setOracleOpen(true)}
+          onNavigate={navigate}
+          currentPath={pathname}
         />
 
         {/* Page Routing */}
@@ -161,14 +185,15 @@ export default function App() {
             isPlaying={isPlaying}
             onPlayEpisode={handlePlayEpisode}
             onOpenOracle={() => setOracleOpen(true)}
+            onNavigate={navigate}
           />
         )}
 
-        {currentPage === 'uber' && (
+        {currentPage === 'ueber' && (
           <UberPage
             onSelectTopic={(topicId) => {
               setSelectedCategory(topicId);
-              window.location.hash = '#/folgen';
+              navigate(ROUTES.folgen);
             }}
           />
         )}
@@ -195,6 +220,8 @@ export default function App() {
         {currentPage === 'kontakt' && (
           <KontaktPage />
         )}
+
+        <SiteFooter onNavigate={navigate} />
 
         {/* Interactive Kiez Oracle Modal */}
         <KiezOracleModal
