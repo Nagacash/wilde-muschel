@@ -102,7 +102,7 @@ Her iconic, unmistakable curves and that legendary booty are CORE to her brand. 
 
 ## 🌍 Wilde Muschel Ecosystem
 
-Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://nagafilms-studio.vercel.app/) (generative cinema).
+Part of the **Naga ecosystem** — Hamburg-based authentic storytelling, paired with [Naga Codex](https://nagacodex.cloud) (AI agents, web dev) and [Naga Films](https://www.naga-films.com/) (generative cinema).
 
 **Connections:**
 - Naga Apparel — Technical streetwear with attitude
