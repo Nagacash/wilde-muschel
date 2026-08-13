@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, HeartHandshake, Shield, CheckCircle, Flame, MessageCircle, AlertCircle, Camera } from 'lucide-react';
-import { HOST_IMAGE_URL, HOST_CURVY_IMAGE_URL } from '../data/podcastData';
+import { Sparkles, HeartHandshake, Shield, CheckCircle, Flame, MessageCircle, AlertCircle, Camera, Heart } from 'lucide-react';
+import { HOST_IMAGE_URL, HOST_CURVY_IMAGE_URL, TRADEMARK_IMAGES } from '../data/podcastData';
 
 export const AboutSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'persona' | 'philosophie'>('persona');
@@ -155,23 +155,72 @@ export const AboutSection: React.FC = () => {
         )}
 
         {activeTab === 'philosophie' && (
-          <div className="p-8 rounded-2xl bg-[#121212] border border-[#2a2a2a] space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-full bg-[#FF2D55]/20 text-[#FF2D55] shrink-0">
-                <AlertCircle className="w-6 h-6" />
+          <div className=”p-8 rounded-2xl bg-[#121212] border border-[#2a2a2a] space-y-6”>
+            <div className=”flex items-start gap-4”>
+              <div className=”p-3 rounded-full bg-[#FF2D55]/20 text-[#FF2D55] shrink-0”>
+                <AlertCircle className=”w-6 h-6” />
               </div>
-              <div className="space-y-2">
-                <h4 className="text-xl font-bold text-[#F5F5F5] font-cinzel">Keine Pornografie – Nur echte Geschichten</h4>
-                <p className="text-sm text-[#A0A0A0] leading-relaxed">
-                  „Wilde Muschel“ verzichtet bewusst auf günstige Vulgarität oder Hardcore-Inhalte. Es ist eine Unterhaltungssendung für Erwachsene, die sich mit Vorurteilen, menschlicher Psychologie und ungeschminkter Realität auseinandersetzt.
+              <div className=”space-y-2”>
+                <h4 className=”text-xl font-bold text-[#F5F5F5] font-cinzel”>Keine Pornografie – Nur echte Geschichten</h4>
+                <p className=”text-sm text-[#A0A0A0] leading-relaxed”>
+                  „Wilde Muschel” verzichtet bewusst auf günstige Vulgarität oder Hardcore-Inhalte. Es ist eine Unterhaltungssendung für Erwachsene, die sich mit Vorurteilen, menschlicher Psychologie und ungeschminkter Realität auseinandersetzt.
                 </p>
-                <div className="pt-2 text-xs text-[#D4AF37] font-serif-italic">
-                  „Wer die Wahrheit sucht, findet sie oft auf der Reeperbahn – nachts um halb zwei!“
+                <div className=”pt-2 text-xs text-[#D4AF37] font-serif-italic”>
+                  „Wer die Wahrheit sucht, findet sie oft auf der Reeperbahn – nachts um halb zwei!”
                 </div>
               </div>
             </div>
           </div>
         )}
+
+        {/* TRADEMARK COLLECTION SECTION */}
+        <div className=”mt-20 pt-20 border-t border-[#2a2a2a]”>
+          <div className=”text-center max-w-3xl mx-auto mb-12 space-y-3”>
+            <div className=”inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121212] border border-[#2a2a2a] text-[#FF2D55] text-[11px] font-semibold tracking-[0.25em] uppercase”>
+              <Heart className=”w-3.5 h-3.5 text-[#FF2D55]” /> HER MERKMAL
+            </div>
+            <h3 className=”text-2xl sm:text-4xl font-black text-[#F5F5F5] tracking-tight font-cinzel”>
+              Die <span className=”text-[#FF2D55]”>Signature Trademark</span>
+            </h3>
+            <p className=”text-base text-[#A0A0A0]”>
+              Iconic curves and legendary confidence. THAT'S the brand — no apologies, pure kiez swagger.
+            </p>
+          </div>
+
+          {/* Trademark Gallery Grid */}
+          <div className=”grid grid-cols-1 md:grid-cols-2 gap-6”>
+            {TRADEMARK_IMAGES.map((image) => (
+              <div
+                key={image.id}
+                className=”group relative rounded-xl overflow-hidden border border-[#2a2a2a] hover:border-[#FF2D55] transition-all duration-300 bg-[#0A0A0A] shadow-lg hover:shadow-[0_0_20px_rgba(255,45,85,0.3)]”
+              >
+                {/* Image Container */}
+                <div className=”relative overflow-hidden h-80 sm:h-96”>
+                  <img
+                    src={image.url}
+                    alt={image.title}
+                    className=”w-full h-full object-cover group-hover:scale-105 transition-transform duration-500”
+                    referrerPolicy=”no-referrer”
+                  />
+                  <div className=”absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity” />
+                </div>
+
+                {/* Content Overlay */}
+                <div className=”absolute bottom-0 left-0 right-0 p-4 space-y-2”>
+                  <p className=”text-[10px] uppercase text-[#FF2D55] tracking-[0.2em] font-semibold”>
+                    Trademark Collection
+                  </p>
+                  <h4 className=”text-base sm:text-lg font-bold text-[#F5F5F5] font-cinzel”>
+                    {image.title}
+                  </h4>
+                  <p className=”text-xs text-[#D4AF37] line-clamp-2”>
+                    {image.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
       </div>
     </section>

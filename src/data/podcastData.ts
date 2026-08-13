@@ -9,6 +9,34 @@ export const HERO_IMAGE_URL = '/src/assets/hero-wilde-muschel.png';
 export const GATE_VIDEO_URL =
   'https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/5d556d31-eaba-4e27-bffe-873a96e7d45c-F0cRnGZkuroJU6y8KzAL_A-output.mp4?x-kcdn-pid=112372';
 
+// Trademark Collection - Her Signature Feature
+export const TRADEMARK_IMAGES = [
+  {
+    id: 'signature-trademark',
+    title: 'Signature Trademark',
+    description: 'Displaying iconic curves with total pride and swagger. Confidence radiates.',
+    url: 'https://hyperagent.com/api/files/usergenerated/threads/cmsnqrkpu03oz07ad0cyvevql/images/d198ed92-61bd-49d7-9f7e-41a578c58815.png'
+  },
+  {
+    id: 'unmistakable-feature',
+    title: 'Unmistakable Feature',
+    description: 'Her most legendary attribute celebrated in bold pop art. THAT\'S the brand.',
+    url: 'https://hyperagent.com/api/files/usergenerated/threads/cmsnqrkpu03oz07ad0cyvevql/images/9c18c3ce-d297-43c8-a621-e62825b0cfe7.png'
+  },
+  {
+    id: 'brand-trademark',
+    title: 'The Brand Trademark',
+    description: 'Powerful pose showcasing the famous curves that define her. St. Pauli queen energy.',
+    url: 'https://hyperagent.com/api/files/usergenerated/threads/cmsnqrkpu03oz07ad0cyvevql/images/3129b143-510c-432c-9980-9ae6f7930628.png'
+  },
+  {
+    id: 'iconic-curves',
+    title: 'Iconic Curves Brand',
+    description: 'Distinctive feature that makes her unmistakable. High fashion meets street soul.',
+    url: 'https://hyperagent.com/api/files/usergenerated/threads/cmsnqrkpu03oz07ad0cyvevql/images/df879f08-4abe-4351-930c-1f87648c5f6e.png'
+  }
+];
+
 export const PODCAST_INFO = {
   name: 'Wilde Muschel',
   slogan: 'Wilde Guschel über ihre Muschel',
