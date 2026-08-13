@@ -6,6 +6,5 @@ coverage/
 ._*
 *.log
 .env*
-!.env.example
 .aistudio/
 .vercel
